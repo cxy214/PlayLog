@@ -486,29 +486,29 @@
 
 /* ─── 今日碎片 ─── */
 .log-card {
-  padding: 24rpx 0;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
   margin-bottom: 0;
   border-radius: 0;
   border-bottom: 1rpx solid #EBEBEB;
-  position: relative;
-  overflow: visible;
+  padding: 0;
+  overflow: hidden;
 }
 
-/* 顶部胶带改为左侧彩色竖条 */
-.log-tape {
-  position: absolute;
-  left: -32rpx;                  /* 贴着页面左边距 */
-  top: 28rpx;
-  height: 40rpx;
+/* 左侧彩色竖条 */
+.log-accent {
   width: 4rpx;
-  margin: 0;
-  border-radius: 0;
+  flex: 0 0 4rpx;
   background: #5BAF85;
-  opacity: 0.8;
+  border-radius: 0;
 }
 
-.log-tape::after {
-  display: none;
+/* 卡片主体内容 */
+.log-body {
+  flex: 1;
+  min-width: 0;
+  padding: 24rpx 0 24rpx 20rpx;
 }
 
 .log-top {
@@ -516,6 +516,11 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 16rpx;
+}
+
+.log-top-left {
+  flex: 1;
+  min-width: 0;
 }
 
 .log-game {
@@ -552,7 +557,35 @@
   letter-spacing: 0.5rpx;
 }
 
-/* 底部分隔线已由 border-bottom 承担，隐藏原虚线 */
+/* 截图缩略图横向滚动 */
+.log-thumbs {
+  display: flex;
+  white-space: nowrap;
+  margin-top: 16rpx;
+}
+
+.log-thumb {
+  display: inline-block;
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 8rpx;
+  flex: 0 0 120rpx;
+  border: 1rpx solid #EBEBEB;
+}
+
+/* 底部分隔线（由 log-card border-bottom 承担） */
 .log-divider {
   display: none;
+}
+
+/* 空状态 / 加载中 */
+.logs-empty {
+  padding: 48rpx 0;
+  text-align: center;
+}
+
+.logs-empty-text {
+  font-size: 24rpx;
+  color: #BBBBBB;
+  letter-spacing: 1rpx;
 }

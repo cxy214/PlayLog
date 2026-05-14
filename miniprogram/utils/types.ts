@@ -36,6 +36,20 @@ export type PlayLog = {
   detail: string;
 };
 
+/** 云数据库中存储的游玩记录（与 PlayLog 区分） */
+export type CloudPlayLog = {
+  _id: string;
+  gameId: string;
+  gameTitle: string;
+  gameAccentColor: string;
+  mood: MoodTag;
+  summary: string;
+  detail: string;
+  progress: string;
+  images: string[];
+  createdAt: string; // ISO 字符串
+};
+
 export type CollectionItem = {
   id: string;
   name: string;

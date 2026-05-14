@@ -89,22 +89,46 @@
       <text class="section-title">今日碎片</text>
       <text class="section-action">生成分享图 ↗</text>
     </view>
-    <view class="log-card card" wx:for="{{todayLogs}}" wx:key="id">
-      <!-- 卡片顶部胶带 -->
-      <view class="log-tape"></view>
-      <view class="log-top">
-        <view>
-          <text class="log-game">{{item.gameTitle}}</text>
-          <text class="log-date">{{item.dateLabel}}</text>
-        </view>
-        <!-- 心情：印章风格 -->
-        <text class="tag warm">{{item.mood}}</text>
-      </view>
-      <text class="log-summary">{{item.summary}}</text>
-      <text class="log-detail">{{item.detail}}</text>
-      <!-- 底部装饰：手绘分割线 -->
-      <view class="log-divider"></view>
+
+    <!-- 加载中 -->
+    <view class="logs-empty" wx:if="{{logsLoading}}">
+      <text class="logs-empty-text">加载中…</text>
     </view>
+
+    <!-- 空状态 -->
+    <view class="logs-empty" wx:elif="{{todayLogs.length === 0}}">
+      <text class="logs-empty-text">今天还没有记录，去写第一篇吧 ↑</text>
+    </view>
+
+    <!-- 记录列表 -->
+    <view class="log-card card" wx:for="{{todayLogs}}" wx:key="_id">
+      <!-- 左侧彩色竖条 -->
+      <view class="log-accent" style="background:{{item.gameAccentColor || '#5BAF85'}};"></view>
+      <view class="log-body">
+        <view class="log-top">
+          <view class="log-top-left">
+            <text class="log-game">{{item.gameTitle}}</text>
+            <text class="log-date">{{item.createdAt}}</text>
+          </view>
+          <text class="tag warm">{{item.mood}}</text>
+        </view>
+        <text class="log-summary">{{item.summary}}</text>
+        <text class="log-detail" wx:if="{{item.detail}}">{{item.detail}}</text>
+        <!-- 截图缩略图（有图才显示） -->
+        <scroll-view scroll-x class="log-thumbs" wx:if="{{item.images && item.images.length > 0}}" show-scrollbar="{{false}}">
+          <image
+            class="log-thumb"
+            wx:for="{{item.images}}"
+            wx:for-item="img"
+            wx:key="*this"
+            src="{{img}}"
+            mode="aspectFill"
+          />
+        </scroll-view>
+        <view class="log-divider"></view>
+      </view>
+    </view>
+
   </view>
 
 </view>
