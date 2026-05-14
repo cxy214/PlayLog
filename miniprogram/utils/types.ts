@@ -15,6 +15,22 @@ export type GameEntry = {
   tags: string[];
 };
 
+/** 云数据库中存储的游戏（games 集合） */
+export type CloudGame = {
+  _id: string;
+  title: string;
+  platform: GamePlatform;
+  status: GameStatus;
+  accentColor: string;
+  progress: string;
+  note: string;
+  tags: string[];
+  coverUrl?: string;
+  externalId?: string; // RAWG 来源时有值
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type GameSearchResult = {
   externalId: string;
   source: "rawg";

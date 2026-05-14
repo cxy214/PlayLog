@@ -1,4 +1,6 @@
 <view class="page-shell library-page">
+
+  <!-- ─── 页头 ─── -->
   <view class="library-heading">
     <view>
       <view class="page-title">游戏书架</view>
@@ -10,23 +12,36 @@
     </view>
   </view>
 
+  <!-- ─── 筛选 Tab ─── -->
   <view class="filter-bar">
-    <view class="filter-item {{item === activeFilter ? 'active' : ''}}" wx:for="{{filters}}" wx:key="*this">{{item}}</view>
+    <view
+      class="filter-item {{item === activeFilter ? 'active' : ''}}"
+      wx:for="{{filters}}"
+      wx:key="*this"
+      bindtap="onFilterTap"
+      data-filter="{{item}}"
+    >{{item}}</view>
   </view>
 
+  <!-- ─── 搜索添加 ─── -->
   <view class="search-card card">
     <view class="search-top">
       <input
         class="search-input"
-        placeholder="搜索游戏名，比如 Stardew Valley"
+        placeholder="搜索游戏名，加入书架…"
         value="{{searchKeyword}}"
         confirm-type="search"
         bindinput="onSearchInput"
         bindconfirm="onSearchGames"
       />
-      <button class="search-button" loading="{{searchLoading}}" bindtap="onSearchGames">搜索</button>
+      <view class="search-btn-row">
+        <view class="search-clear" wx:if="{{searchKeyword}}" bindtap="clearSearch">✕</view>
+        <button class="search-button" loading="{{searchLoading}}" bindtap="onSearchGames">搜索</button>
+      </view>
     </view>
     <text class="search-error" wx:if="{{searchError}}">{{searchError}}</text>
+
+    <!-- 搜索结果 -->
     <view class="result-list" wx:if="{{searchResults.length}}">
       <view
         class="result-item"
@@ -38,33 +53,54 @@
         <view class="result-cover" style="background-image: url({{item.coverUrl}});"></view>
         <view class="result-main">
           <text class="result-title">{{item.title}}</text>
-          <text class="result-meta">{{item.platformLabel}}</text>
-          <text class="result-meta">{{item.genreLabel}}</text>
+          <text class="result-meta">{{item.platformLabel}} · {{item.genreLabel}}</text>
+          <text class="result-meta" wx:if="{{item.released}}">{{item.released}}</text>
         </view>
         <text class="result-add">加入</text>
       </view>
     </view>
   </view>
 
-  <view class="shelf">
-    <view class="shelf-card card" wx:for="{{games}}" wx:key="id">
+  <!-- ─── 加载中 ─── -->
+  <view class="shelf-empty" wx:if="{{loading}}">
+    <text class="shelf-empty-text">加载中…</text>
+  </view>
+
+  <!-- ─── 空状态 ─── -->
+  <view class="shelf-empty" wx:elif="{{games.length === 0 && !loading}}">
+    <text class="shelf-empty-text" wx:if="{{activeFilter === '全部'}}">书架还是空的，搜索一款游戏加进来吧</text>
+    <text class="shelf-empty-text" wx:else>这个分类还没有游戏</text>
+  </view>
+
+  <!-- ─── 书架列表 ─── -->
+  <view class="shelf" wx:elif="{{games.length > 0}}">
+    <view class="shelf-card card" wx:for="{{games}}" wx:key="_id">
+      <!-- 左侧色块 -->
       <view class="cover-tile" style="background: {{item.accentColor}};">
-        <text>{{item.title}}</text>
+        <text class="cover-tile-title">{{item.title}}</text>
         <view class="cover-ring"></view>
       </view>
       <view class="shelf-main">
         <view class="shelf-top">
           <text class="shelf-title">{{item.title}}</text>
-          <text class="platform">{{item.platform}}</text>
+          <text class="platform">{{platformLabelMap[item.platform]}}</text>
         </view>
         <text class="shelf-progress">{{item.progress}}</text>
         <text class="shelf-note">{{item.note}}</text>
-        <view class="tag-line">
-          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        <view class="shelf-bottom">
+          <view class="tag-line">
+            <text class="tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+          </view>
+          <!-- 状态切换按钮 -->
+          <view
+            class="status-chip status-{{item.status}}"
+            bindtap="onStatusChange"
+            data-id="{{item._id}}"
+            data-status="{{item.status}}"
+          >{{statusLabelMap[item.status]}}</view>
         </view>
       </view>
     </view>
   </view>
 
-  <button class="primary-button add-button">添加游戏</button>
 </view>

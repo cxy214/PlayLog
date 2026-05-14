@@ -1,5 +1,4 @@
-import { games as mockGames } from "../../../utils/mock";
-import type { GameEntry, MoodTag } from "../../../utils/types";
+import type { CloudGame, MoodTag } from "../../../utils/types";
 
 // 从书架游戏转换为表单用的精简结构
 interface SelectedGame {
@@ -42,17 +41,33 @@ Page({
     saveError: "",
   },
 
-  onLoad() {
-    // 把书架 mock 数据转成精简结构供快速选择
-    const shelfGames: SelectedGame[] = mockGames.map((g: GameEntry) => ({
-      id: g.id,
-      title: g.title,
-      accentColor: g.accentColor,
-      platformLabel: PLATFORM_LABEL[g.platform] ?? g.platform,
-      progress: g.progress,
-      source: "shelf",
-    }));
-    this.setData({ shelfGames });
+  async onLoad() {
+    await this.fetchShelfGames();
+  },
+
+  async fetchShelfGames() {
+    try {
+      const db = wx.cloud.database();
+      const res = await db
+        .collection("games")
+        .where({ status: db.command.in(["playing", "wishlist", "paused"]) })
+        .orderBy("updatedAt", "desc")
+        .limit(50)
+        .get();
+
+      const shelfGames: SelectedGame[] = (res.data as CloudGame[]).map((g) => ({
+        id: g._id,
+        title: g.title,
+        accentColor: g.accentColor,
+        platformLabel: PLATFORM_LABEL[g.platform] ?? g.platform,
+        progress: g.progress,
+        source: "shelf" as const,
+      }));
+      this.setData({ shelfGames });
+    } catch (err) {
+      console.error("读取书架失败", err);
+      // 静默降级：书架为空，用户仍可搜索
+    }
   },
 
   // ─── 游戏搜索 ───────────────────────────────────────────

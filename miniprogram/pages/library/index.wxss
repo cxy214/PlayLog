@@ -378,6 +378,93 @@
   margin-top: 14rpx;
 }
 
-.add-button {
-  margin-top: 32rpx;
+/* 书架底部：标签 + 状态 chip 同行 */
+.shelf-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+/* 状态切换 chip */
+.status-chip {
+  flex: 0 0 auto;
+  height: 40rpx;
+  padding: 0 16rpx;
+  border: 1rpx solid #EBEBEB;
+  border-radius: 4rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+}
+
+.status-chip.status-playing {
+  border-color: #5BAF85;
+  color: #5BAF85;
+}
+
+.status-chip.status-wishlist {
+  border-color: #C9A84C;
+  color: #C9A84C;
+}
+
+.status-chip.status-finished {
+  border-color: #7B9EC9;
+  color: #7B9EC9;
+}
+
+.status-chip.status-paused {
+  border-color: #BBBBBB;
+  color: #BBBBBB;
+}
+
+/* 搜索框右侧：清除 + 搜索按钮 */
+.search-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  flex: 0 0 auto;
+}
+
+.search-clear {
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #BBBBBB;
+}
+
+/* 封面色块内文字 */
+.cover-tile-title {
+  position: relative;
+  z-index: 3;
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5rpx;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 空状态 / 加载中 */
+.shelf-empty {
+  padding: 80rpx 0;
+  text-align: center;
+}
+
+.shelf-empty-text {
+  font-size: 24rpx;
+  color: #BBBBBB;
+  letter-spacing: 1rpx;
 }

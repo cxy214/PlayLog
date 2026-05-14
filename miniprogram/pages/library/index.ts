@@ -1,131 +1,210 @@
-import { games } from "../../utils/mock";
-import type { GameEntry, GamePlatform, GameSearchResult } from "../../utils/types";
+import type { CloudGame, GamePlatform, GameSearchResult, GameStatus } from "../../utils/types";
 
-type SearchGamesResponse = {
-  games?: GameSearchResult[];
-  message?: string;
+// ─── 常量 ────────────────────────────────────────────────
+
+const STATUS_FILTERS = ["全部", "在玩", "想玩", "已通关", "搁置"] as const;
+type FilterLabel = typeof STATUS_FILTERS[number];
+
+const FILTER_TO_STATUS: Record<FilterLabel, GameStatus | null> = {
+  全部: null,
+  在玩: "playing",
+  想玩: "wishlist",
+  已通关: "finished",
+  搁置: "paused",
 };
+
+const STATUS_LABEL: Record<GameStatus, string> = {
+  playing: "在玩",
+  wishlist: "想玩",
+  finished: "已通关",
+  paused: "搁置",
+};
+
+const PLATFORM_LABEL: Record<GamePlatform, string> = {
+  switch: "Switch",
+  steam: "Steam",
+  mobile: "手游",
+  other: "其他",
+};
+
+// 莫兰迪色板，搜索结果添加时随机分配
+const ACCENT_COLORS = ["#5BAF85", "#D4896A", "#C9A84C", "#7B9EC9", "#A07BC9", "#7BAFC9"];
 
 const platformMap: Record<string, GamePlatform> = {
-  nintendo: "switch",
-  switch: "switch",
-  pc: "steam",
-  steam: "steam",
-  ios: "mobile",
-  android: "mobile"
+  nintendo: "switch", switch: "switch",
+  pc: "steam", steam: "steam",
+  ios: "mobile", android: "mobile",
 };
 
-const resolvePlatform = (platforms: string[]): GamePlatform => {
+function resolvePlatform(platforms: string[]): GamePlatform {
   const normalized = platforms.join(" ").toLowerCase();
-  const matchedKey = Object.keys(platformMap).find((key) => normalized.includes(key));
+  const key = Object.keys(platformMap).find((k) => normalized.includes(k));
+  return key ? platformMap[key] : "other";
+}
 
-  return matchedKey ? platformMap[matchedKey] : "other";
-};
-
-const toGameEntry = (game: GameSearchResult): GameEntry => ({
-  id: `rawg-${game.externalId}`,
-  title: game.title,
-  platform: resolvePlatform(game.platforms),
-  status: "wishlist",
-  accentColor: "#7BAE8B",
-  progress: "想玩",
-  note: game.released ? `发行于 ${game.released}` : "从游戏资料库添加",
-  tags: game.genres.length > 0 ? game.genres.slice(0, 3) : ["新游戏"]
-});
+// ─── Page ────────────────────────────────────────────────
 
 Page({
   data: {
-    filters: ["在玩", "想玩", "已通关", "搁置"],
-    activeFilter: "在玩",
-    games,
+    filters: STATUS_FILTERS as unknown as string[],
+    activeFilter: "全部" as FilterLabel,
+    allGames: [] as CloudGame[],      // 云数据库全量
+    games: [] as CloudGame[],         // 当前筛选后展示
+    loading: false,
+
+    // 搜索
     searchKeyword: "",
     searchResults: [] as GameSearchResult[],
     searchLoading: false,
-    searchError: ""
+    searchError: "",
+
+    // 展示用辅助字段（在 map 时注入）
+    statusLabelMap: STATUS_LABEL,
+    platformLabelMap: PLATFORM_LABEL,
   },
 
-  onSearchInput(event: { detail: { value: string } }) {
-    this.setData({
-      searchKeyword: event.detail.value,
-      searchError: ""
-    });
+  onLoad() {
+    this.fetchGames();
   },
 
-  onSearchGames() {
-    const keyword = String(this.data.searchKeyword || "").trim();
+  onShow() {
+    // 从新建记录页返回时刷新（书架可能被新记录引用了新游戏）
+    this.fetchGames();
+  },
 
+  // ─── 云数据库读取 ─────────────────────────────────────
+
+  async fetchGames() {
+    this.setData({ loading: true });
+    try {
+      const db = wx.cloud.database();
+      const res = await db
+        .collection("games")
+        .orderBy("createdAt", "desc")
+        .limit(100)
+        .get();
+
+      const allGames = res.data as CloudGame[];
+      this.setData({ allGames });
+      this.applyFilter(this.data.activeFilter);
+    } catch (err) {
+      console.error("读取书架失败", err);
+      wx.showToast({ title: "书架加载失败", icon: "none" });
+    } finally {
+      this.setData({ loading: false });
+    }
+  },
+
+  // ─── 筛选 ─────────────────────────────────────────────
+
+  onFilterTap(e: WechatMiniprogram.TouchEvent) {
+    const filter = e.currentTarget.dataset.filter as FilterLabel;
+    if (filter === this.data.activeFilter) return;
+    this.setData({ activeFilter: filter });
+    this.applyFilter(filter);
+  },
+
+  applyFilter(filter: FilterLabel) {
+    const status = FILTER_TO_STATUS[filter];
+    const games = status
+      ? this.data.allGames.filter((g) => g.status === status)
+      : this.data.allGames;
+    this.setData({ games });
+  },
+
+  // ─── 游戏搜索（云函数） ───────────────────────────────
+
+  onSearchInput(e: WechatMiniprogram.Input) {
+    this.setData({ searchKeyword: e.detail.value, searchError: "" });
+  },
+
+  async onSearchGames() {
+    const keyword = this.data.searchKeyword.trim();
     if (!keyword) {
-      this.setData({
-        searchError: "先输入一个游戏名试试"
-      });
+      this.setData({ searchError: "先输入一个游戏名试试" });
       return;
     }
-
-    if (!wx.cloud) {
+    this.setData({ searchLoading: true, searchError: "", searchResults: [] });
+    try {
+      const res = await wx.cloud.callFunction({ name: "searchGames", data: { keyword } });
+      const result = (res.result as any) || {};
       this.setData({
-        searchError: "当前环境还没有启用微信云开发"
+        searchResults: result.games || [],
+        searchError: result.games?.length === 0 ? "没找到相关游戏" : "",
       });
-      return;
+    } catch {
+      this.setData({ searchError: "游戏资料暂时没有连上，稍后再试" });
+    } finally {
+      this.setData({ searchLoading: false });
     }
-
-    this.setData({
-      searchLoading: true,
-      searchError: "",
-      searchResults: []
-    });
-
-    wx.cloud.callFunction<SearchGamesResponse>({
-      name: "searchGames",
-      data: { keyword },
-      success: (res) => {
-        const result = res.result || {};
-
-        this.setData({
-          searchResults: result.games || [],
-          searchError: result.message || ""
-        });
-      },
-      fail: () => {
-        this.setData({
-          searchError: "游戏资料暂时没有连上，稍后再试"
-        });
-      },
-      complete: () => {
-        this.setData({
-          searchLoading: false
-        });
-      }
-    });
   },
 
-  onAddSearchResult(event: { currentTarget: { dataset: { index: number } } }) {
-    const index = event.currentTarget.dataset.index;
+  clearSearch() {
+    this.setData({ searchKeyword: "", searchResults: [], searchError: "" });
+  },
+
+  // ─── 添加游戏到书架（写云数据库） ────────────────────
+
+  async onAddSearchResult(e: WechatMiniprogram.TouchEvent) {
+    const index = e.currentTarget.dataset.index as number;
     const selected = this.data.searchResults[index];
+    if (!selected) return;
 
-    if (!selected) {
-      return;
-    }
-
-    const nextGame = toGameEntry(selected);
-    const exists = this.data.games.some((game: GameEntry) => game.id === nextGame.id);
-
+    // 检查是否已在书架（按 externalId）
+    const exists = this.data.allGames.some((g) => g.externalId === selected.externalId);
     if (exists) {
-      wx.showToast({
-        title: "已经在书架里了",
-        icon: "none"
-      });
+      wx.showToast({ title: "已经在书架里了", icon: "none" });
       return;
     }
 
-    this.setData({
-      games: [nextGame, ...this.data.games],
-      searchResults: [],
-      searchKeyword: ""
-    });
+    const now = new Date().toISOString();
+    const accentColor = ACCENT_COLORS[Math.floor(Math.random() * ACCENT_COLORS.length)];
+    const newGame: Omit<CloudGame, "_id"> = {
+      title: selected.title,
+      platform: resolvePlatform(selected.platforms),
+      status: "wishlist",
+      accentColor,
+      progress: "想玩",
+      note: selected.released ? `发行于 ${selected.released}` : "从游戏资料库添加",
+      tags: selected.genres.length > 0 ? selected.genres.slice(0, 3) : ["新游戏"],
+      coverUrl: selected.coverUrl ?? "",
+      externalId: selected.externalId,
+      createdAt: now,
+      updatedAt: now,
+    };
 
-    wx.showToast({
-      title: "已加入游戏书架",
-      icon: "success"
+    wx.showLoading({ title: "添加中…", mask: true });
+    try {
+      await wx.cloud.database().collection("games").add({ data: newGame });
+      wx.hideLoading();
+      wx.showToast({ title: "已加入书架", icon: "success" });
+      this.setData({ searchResults: [], searchKeyword: "" });
+      this.fetchGames();
+    } catch (err) {
+      wx.hideLoading();
+      console.error("添加游戏失败", err);
+      wx.showToast({ title: "添加失败，请重试", icon: "none" });
+    }
+  },
+
+  // ─── 更新游戏状态 ─────────────────────────────────────
+
+  onStatusChange(e: WechatMiniprogram.TouchEvent) {
+    const { id, status } = e.currentTarget.dataset as { id: string; status: GameStatus };
+    const statusList: GameStatus[] = ["playing", "wishlist", "finished", "paused"];
+    const nextIndex = (statusList.indexOf(status) + 1) % statusList.length;
+    const nextStatus = statusList[nextIndex];
+
+    wx.cloud.database().collection("games").doc(id).update({
+      data: { status: nextStatus, updatedAt: new Date().toISOString() },
+    }).then(() => {
+      const allGames = this.data.allGames.map((g) =>
+        g._id === id ? { ...g, status: nextStatus } : g
+      );
+      this.setData({ allGames });
+      this.applyFilter(this.data.activeFilter);
+    }).catch(() => {
+      wx.showToast({ title: "更新失败", icon: "none" });
     });
-  }
+  },
 });
