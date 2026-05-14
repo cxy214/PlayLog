@@ -11,12 +11,19 @@ function fmtTime(iso: string): string {
   return `${h}:${m}`;
 }
 
+/** 云数据库记录 + 展示用字段 */
+interface DisplayLog extends CloudPlayLog {
+  timeLabel: string;   // "14:30"
+  hasImages: boolean;
+  imageCount: number;
+}
+
 Page({
   data: {
     dateLabel: "",
     games,
     stats,
-    todayLogs: [] as CloudPlayLog[],
+    todayLogs: [] as DisplayLog[],
     logsLoading: false,
   },
 
@@ -40,7 +47,6 @@ Page({
       const db = wx.cloud.database();
       const _ = db.command;
 
-      // 今日 0 点 ~ 明日 0 点
       const now = new Date();
       const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
       const tomorrowStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).toISOString();
@@ -54,7 +60,14 @@ Page({
         .limit(20)
         .get();
 
-      this.setData({ todayLogs: res.data as CloudPlayLog[] });
+      const todayLogs: DisplayLog[] = (res.data as CloudPlayLog[]).map((item) => ({
+        ...item,
+        timeLabel: fmtTime(item.createdAt),
+        hasImages: Array.isArray(item.images) && item.images.length > 0,
+        imageCount: Array.isArray(item.images) ? item.images.length : 0,
+      }));
+
+      this.setData({ todayLogs });
     } catch (err) {
       console.error("读取今日记录失败", err);
     } finally {
@@ -62,11 +75,14 @@ Page({
     }
   },
 
-  // ─── 工具方法（供 wxml 调用不到，挂在 data 上） ──────────
-
-  fmtTime,
+  // ─── 跳转 ────────────────────────────────────────────────
 
   goNewRecord() {
     wx.navigateTo({ url: "/pages/record/new/index" });
+  },
+
+  goDetail(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset.id as string;
+    wx.navigateTo({ url: `/pages/record/detail/index?id=${id}` });
   },
 });

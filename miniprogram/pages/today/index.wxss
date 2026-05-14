@@ -523,6 +523,45 @@
   min-width: 0;
 }
 
+.log-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  margin-top: 5rpx;
+}
+
+.log-progress {
+  font-size: 20rpx;
+  color: #BBBBBB;
+  letter-spacing: 0.5rpx;
+}
+
+.log-top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;
+  flex: 0 0 auto;
+}
+
+/* 截图数量角标 */
+.log-img-badge {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.log-img-badge-icon {
+  font-size: 18rpx;
+  color: #BBBBBB;
+}
+
+.log-img-badge-count {
+  font-size: 18rpx;
+  color: #BBBBBB;
+  letter-spacing: 0.5rpx;
+}
+
 .log-game {
   display: block;
   font-size: 28rpx;

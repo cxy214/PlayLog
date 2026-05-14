@@ -106,7 +106,9 @@
       bindinput="onDetailInput"
       maxlength="300"
       auto-height
+      adjust-position
     />
+    <text class="input-count">{{detail.length}}/300</text>
   </view>
 
   <view class="form-divider"></view>

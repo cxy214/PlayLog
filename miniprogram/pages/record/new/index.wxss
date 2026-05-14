@@ -1,7 +1,7 @@
 /* ─── 新建游玩记录表单页 ─── */
 
 .record-page {
-  padding-bottom: 120rpx;
+  padding-bottom: calc(160rpx + env(safe-area-inset-bottom));
 }
 
 /* ─── 表单分区 ─── */

@@ -101,21 +101,37 @@
     </view>
 
     <!-- 记录列表 -->
-    <view class="log-card card" wx:for="{{todayLogs}}" wx:key="_id">
+    <view
+      class="log-card card"
+      wx:for="{{todayLogs}}"
+      wx:key="_id"
+      bindtap="goDetail"
+      data-id="{{item._id}}"
+    >
       <!-- 左侧彩色竖条 -->
       <view class="log-accent" style="background:{{item.gameAccentColor || '#5BAF85'}};"></view>
       <view class="log-body">
         <view class="log-top">
           <view class="log-top-left">
             <text class="log-game">{{item.gameTitle}}</text>
-            <text class="log-date">{{item.createdAt}}</text>
+            <view class="log-meta-row">
+              <text class="log-date">{{item.timeLabel}}</text>
+              <text class="log-progress" wx:if="{{item.progress}}">· {{item.progress}}</text>
+            </view>
           </view>
-          <text class="tag warm">{{item.mood}}</text>
+          <view class="log-top-right">
+            <text class="tag warm">{{item.mood}}</text>
+            <!-- 截图数量角标 -->
+            <view class="log-img-badge" wx:if="{{item.hasImages}}">
+              <text class="log-img-badge-icon">⊞</text>
+              <text class="log-img-badge-count">{{item.imageCount}}</text>
+            </view>
+          </view>
         </view>
         <text class="log-summary">{{item.summary}}</text>
         <text class="log-detail" wx:if="{{item.detail}}">{{item.detail}}</text>
         <!-- 截图缩略图（有图才显示） -->
-        <scroll-view scroll-x class="log-thumbs" wx:if="{{item.images && item.images.length > 0}}" show-scrollbar="{{false}}">
+        <scroll-view scroll-x class="log-thumbs" wx:if="{{item.hasImages}}" show-scrollbar="{{false}}">
           <image
             class="log-thumb"
             wx:for="{{item.images}}"

@@ -1,0 +1,71 @@
+<view class="page-shell detail-page">
+
+  <!-- ─── 加载中 ─── -->
+  <view class="state-center" wx:if="{{loading}}">
+    <text class="state-text">加载中…</text>
+  </view>
+
+  <!-- ─── 未找到 ─── -->
+  <view class="state-center" wx:elif="{{notFound}}">
+    <text class="state-text">记录不存在或已删除</text>
+  </view>
+
+  <!-- ─── 正文 ─── -->
+  <block wx:elif="{{log}}">
+
+    <!-- 顶部：游戏色块 + 标题区 -->
+    <view class="detail-hero" style="border-left: 6rpx solid {{log.moodColor}};">
+      <view class="detail-game">{{log.gameTitle}}</view>
+      <view class="detail-meta-row">
+        <text class="detail-date">{{log.dateLabel}}</text>
+        <text class="detail-progress" wx:if="{{log.progress}}">{{log.progress}}</text>
+      </view>
+      <view class="detail-mood-chip" style="border-color:{{log.moodColor}}; color:{{log.moodColor}};">
+        {{log.mood}}
+      </view>
+    </view>
+
+    <view class="detail-divider"></view>
+
+    <!-- 一句话记录 -->
+    <view class="detail-section">
+      <view class="detail-label">一句话记录</view>
+      <text class="detail-summary">{{log.summary}}</text>
+    </view>
+
+    <!-- 详细备注（有才显示） -->
+    <block wx:if="{{log.detail}}">
+      <view class="detail-divider"></view>
+      <view class="detail-section">
+        <view class="detail-label">详细备注</view>
+        <text class="detail-body">{{log.detail}}</text>
+      </view>
+    </block>
+
+    <!-- 截图（有才显示） -->
+    <block wx:if="{{log.hasImages}}">
+      <view class="detail-divider"></view>
+      <view class="detail-section">
+        <view class="detail-label">截图 <text class="detail-label-count">{{log.images.length}} 张</text></view>
+        <view class="detail-img-grid">
+          <image
+            class="detail-img"
+            wx:for="{{log.images}}"
+            wx:key="*this"
+            src="{{item}}"
+            mode="aspectFill"
+            bindtap="previewImage"
+            data-index="{{index}}"
+          />
+        </view>
+      </view>
+    </block>
+
+    <!-- 底部操作区 -->
+    <view class="detail-actions">
+      <view class="detail-del-btn" bindtap="confirmDelete">删除记录</view>
+    </view>
+
+  </block>
+
+</view>

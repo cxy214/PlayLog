@@ -211,13 +211,14 @@ Page({
 
     try {
       const db = wx.cloud.database();
-      await db.collection("playLogs").add({ data: record });
+      const res = await db.collection("playLogs").add({ data: record });
+      const newId = res._id as string;
 
-      wx.showToast({ title: "记录已保存 ✓", icon: "none", duration: 1500 });
-      // 延迟返回，让 toast 显示完
+      wx.showToast({ title: "记录已保存 ✓", icon: "none", duration: 1200 });
+      // 跳转到详情页，用 redirectTo 替换当前页，避免返回栈堆叠
       setTimeout(() => {
-        wx.navigateBack();
-      }, 1600);
+        wx.redirectTo({ url: `/pages/record/detail/index?id=${newId}` });
+      }, 1300);
     } catch (err: any) {
       console.error("保存失败", err);
       this.setData({
