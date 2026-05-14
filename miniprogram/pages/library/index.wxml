@@ -1,15 +1,56 @@
 <view class="page-shell library-page">
-  <view class="page-title">游戏库</view>
-  <view class="page-subtitle">给每一款游戏一个状态，也给自己留一条轻松的进度线。</view>
+  <view class="library-heading">
+    <view>
+      <view class="page-title">游戏书架</view>
+      <view class="page-subtitle">给每一款游戏夹一枚书签，慢慢记录进度和心情。</view>
+    </view>
+    <view class="shelf-doodle">
+      <view class="doodle-book"></view>
+      <view class="doodle-book small"></view>
+    </view>
+  </view>
 
   <view class="filter-bar">
     <view class="filter-item {{item === activeFilter ? 'active' : ''}}" wx:for="{{filters}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="search-card card">
+    <view class="search-top">
+      <input
+        class="search-input"
+        placeholder="搜索游戏名，比如 Stardew Valley"
+        value="{{searchKeyword}}"
+        confirm-type="search"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchGames"
+      />
+      <button class="search-button" loading="{{searchLoading}}" bindtap="onSearchGames">搜索</button>
+    </view>
+    <text class="search-error" wx:if="{{searchError}}">{{searchError}}</text>
+    <view class="result-list" wx:if="{{searchResults.length}}">
+      <view
+        class="result-item"
+        wx:for="{{searchResults}}"
+        wx:key="externalId"
+        data-index="{{index}}"
+        bindtap="onAddSearchResult"
+      >
+        <view class="result-cover" style="background-image: url({{item.coverUrl}});"></view>
+        <view class="result-main">
+          <text class="result-title">{{item.title}}</text>
+          <text class="result-meta">{{item.platformLabel}}</text>
+          <text class="result-meta">{{item.genreLabel}}</text>
+        </view>
+        <text class="result-add">加入</text>
+      </view>
+    </view>
   </view>
 
   <view class="shelf">
     <view class="shelf-card card" wx:for="{{games}}" wx:key="id">
       <view class="cover-tile" style="background: {{item.accentColor}};">
         <text>{{item.title}}</text>
+        <view class="cover-ring"></view>
       </view>
       <view class="shelf-main">
         <view class="shelf-top">

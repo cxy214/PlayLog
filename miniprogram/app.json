@@ -7,14 +7,14 @@
   ],
   "window": {
     "navigationBarTitleText": "PlayLog",
-    "navigationBarBackgroundColor": "#F6F8FB",
+    "navigationBarBackgroundColor": "#F7FAF4",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F6F8FB",
+    "backgroundColor": "#F7FAF4",
     "backgroundTextStyle": "dark"
   },
   "tabBar": {
-    "color": "#7D8790",
-    "selectedColor": "#0F766E",
+    "color": "#839084",
+    "selectedColor": "#6D9F7A",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [

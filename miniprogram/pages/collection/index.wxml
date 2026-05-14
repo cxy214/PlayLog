@@ -1,6 +1,14 @@
 <view class="page-shell collection-page">
-  <view class="page-title">收藏柜</view>
-  <view class="page-subtitle">盲盒、文具、游戏周边都放在这里，心愿和重复款也不会忘。</view>
+  <view class="collection-heading">
+    <view>
+      <view class="page-title">小收藏</view>
+      <view class="page-subtitle">盲盒、文具、游戏周边都放在这里，像整理一格小展示柜。</view>
+    </view>
+    <view class="box-doodle">
+      <view class="box-lid"></view>
+      <view class="box-body"></view>
+    </view>
+  </view>
 
   <view class="category-row">
     <view class="category-pill {{index === 0 ? 'active' : ''}}" wx:for="{{categories}}" wx:key="*this">{{item}}</view>
@@ -10,6 +18,7 @@
     <view class="collection-card card" wx:for="{{collectionItems}}" wx:key="id">
       <view class="item-display" style="background: {{item.accentColor}};">
         <view class="display-shine"></view>
+        <view class="display-sticker"></view>
       </view>
       <view class="item-body">
         <view class="item-top">

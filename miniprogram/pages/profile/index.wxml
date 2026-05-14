@@ -2,9 +2,10 @@
   <view class="profile-card card">
     <view class="avatar">游</view>
     <view class="profile-copy">
-      <view class="page-title">我的 PlayLog</view>
-      <view class="page-subtitle">一册正在长出来的游戏生活记录本。</view>
+      <view class="page-title">我的游帐</view>
+      <view class="page-subtitle">一册正在长出来的游戏生活记录本，慢慢贴满喜欢的瞬间。</view>
     </view>
+    <view class="profile-spark"></view>
   </view>
 
   <view class="section">
@@ -33,7 +34,7 @@
   </view>
 
   <view class="section note-card card">
-    <text class="note-title">下一步</text>
+    <text class="note-title">下一页计划</text>
     <text class="note-text">接入微信云开发后，这里会显示同步状态、图片容量和账号备份入口。</text>
   </view>
 </view>

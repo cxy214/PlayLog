@@ -1,48 +1,76 @@
 <view class="page-shell today-page">
-  <view class="hero">
+
+  <!-- ─── Hero：拼贴手帐风 ─── -->
+  <view class="hero torn-edge">
+    <!-- 背景纸纹横线 -->
+    <view class="hero-lines">
+      <view class="hero-line" wx:for="{{[1,2,3,4,5]}}" wx:key="*this"></view>
+    </view>
+
     <view class="hero-copy">
-      <view class="date">{{dateLabel}}</view>
-      <view class="page-title">今日记录</view>
-      <view class="page-subtitle">今天的游戏进度、截图和收藏灵感，都可以在这里留下。</view>
+      <!-- 日期：印章风格 -->
+      <view class="date-stamp">{{dateLabel}}</view>
+      <view class="page-title hero-title">今日手帐</view>
+      <view class="page-subtitle">把今天玩到的片段、截图和小心情，轻轻贴进 PlayLog。</view>
     </view>
-    <view class="hero-device">
-      <view class="device-screen">
-        <view class="screen-line wide"></view>
-        <view class="screen-line"></view>
+
+    <!-- 右侧插画区：拼贴卡片 -->
+    <view class="hero-doodle">
+      <!-- 主手帐卡片 -->
+      <view class="doodle-card">
+        <view class="doodle-spark"></view>
+        <view class="doodle-line wide"></view>
+        <view class="doodle-line"></view>
+        <view class="doodle-flower">
+          <view></view><view></view><view></view><view></view>
+        </view>
       </view>
-      <view class="device-controls">
-        <view class="control-dot"></view>
-        <view class="control-dot active"></view>
-      </view>
+      <!-- 便签本 -->
+      <view class="doodle-pad"></view>
+      <!-- 小装饰：回形针 -->
+      <view class="doodle-clip"></view>
     </view>
   </view>
 
+  <!-- ─── 快捷操作 ─── -->
   <view class="quick-panel">
-    <button class="primary-button record-button">新建游玩记录</button>
+    <button class="primary-button record-button">＋ 新建游玩记录</button>
     <view class="quick-actions">
-      <view class="quick-action">传截图</view>
-      <view class="quick-action">记收藏</view>
+      <view class="quick-action">
+        <view class="quick-icon icon-camera"></view>
+        <text>截图</text>
+      </view>
+      <view class="quick-action">
+        <view class="quick-icon icon-star"></view>
+        <text>收藏</text>
+      </view>
     </view>
   </view>
 
+  <!-- ─── 统计条 ─── -->
   <view class="section stats-strip">
     <view class="stat-card" wx:for="{{stats}}" wx:key="label">
+      <!-- 卡片顶部彩色胶带 -->
+      <view class="stat-tape"></view>
       <text class="stat-value">{{item.value}}</text>
       <text class="stat-label">{{item.label}}</text>
       <text class="stat-hint">{{item.hint}}</text>
     </view>
   </view>
 
+  <!-- ─── 最近在玩 ─── -->
   <view class="section">
     <view class="section-header">
       <text class="section-title">最近在玩</text>
-      <text class="section-action">查看全部</text>
+      <text class="section-action">查看全部 →</text>
     </view>
     <scroll-view scroll-x class="game-row" enhanced show-scrollbar="{{false}}">
       <view class="game-card" wx:for="{{games}}" wx:key="id">
         <view class="cover" style="background: {{item.accentColor}};">
           <view class="cover-noise"></view>
           <text class="cover-title">{{item.title}}</text>
+          <!-- 封面右上角线条小人 -->
+          <view class="cover-figure"></view>
         </view>
         <view class="game-meta">
           <text class="game-title">{{item.title}}</text>
@@ -55,21 +83,28 @@
     </scroll-view>
   </view>
 
+  <!-- ─── 今日碎片 ─── -->
   <view class="section">
     <view class="section-header">
       <text class="section-title">今日碎片</text>
-      <text class="section-action">生成分享图</text>
+      <text class="section-action">生成分享图 ↗</text>
     </view>
     <view class="log-card card" wx:for="{{todayLogs}}" wx:key="id">
+      <!-- 卡片顶部胶带 -->
+      <view class="log-tape"></view>
       <view class="log-top">
         <view>
           <text class="log-game">{{item.gameTitle}}</text>
           <text class="log-date">{{item.dateLabel}}</text>
         </view>
+        <!-- 心情：印章风格 -->
         <text class="tag warm">{{item.mood}}</text>
       </view>
       <text class="log-summary">{{item.summary}}</text>
       <text class="log-detail">{{item.detail}}</text>
+      <!-- 底部装饰：手绘分割线 -->
+      <view class="log-divider"></view>
     </view>
   </view>
+
 </view>

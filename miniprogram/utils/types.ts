@@ -15,6 +15,18 @@ export type GameEntry = {
   tags: string[];
 };
 
+export type GameSearchResult = {
+  externalId: string;
+  source: "rawg";
+  title: string;
+  coverUrl?: string;
+  platforms: string[];
+  platformLabel: string;
+  genres: string[];
+  genreLabel: string;
+  released?: string;
+};
+
 export type PlayLog = {
   id: string;
   gameTitle: string;
