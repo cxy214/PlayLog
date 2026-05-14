@@ -2,7 +2,7 @@
   <view class="hero">
     <view class="hero-copy">
       <view class="date">{{dateLabel}}</view>
-      <view class="page-title">今日游帐</view>
+      <view class="page-title">今日记录</view>
       <view class="page-subtitle">今天的游戏进度、截图和收藏灵感，都可以在这里留下。</view>
     </view>
     <view class="hero-device">

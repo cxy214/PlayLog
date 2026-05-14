@@ -1,5 +1,5 @@
 {
-  "description": "Youzhang WeChat Mini Program",
+  "description": "PlayLog WeChat Mini Program",
   "setting": {
     "urlCheck": true,
     "es6": true,
@@ -43,7 +43,7 @@
   "compileType": "miniprogram",
   "libVersion": "latest",
   "appid": "wxb52feb36919f279b",
-  "projectname": "youzhang-miniprogram",
+  "projectname": "PlayLog",
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "condition": {},

@@ -2,7 +2,7 @@
   <view class="profile-card card">
     <view class="avatar">游</view>
     <view class="profile-copy">
-      <view class="page-title">我的游帐</view>
+      <view class="page-title">我的 PlayLog</view>
       <view class="page-subtitle">一册正在长出来的游戏生活记录本。</view>
     </view>
   </view>

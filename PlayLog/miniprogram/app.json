@@ -6,7 +6,7 @@
     "pages/profile/index"
   ],
   "window": {
-    "navigationBarTitleText": "游帐",
+    "navigationBarTitleText": "PlayLog",
     "navigationBarBackgroundColor": "#F6F8FB",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#F6F8FB",

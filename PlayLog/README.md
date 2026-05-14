@@ -1,4 +1,4 @@
-# 游帐小程序
+# PlayLog 小程序
 
 原生微信小程序 + TypeScript 的 MVP 原型，当前阶段先完成产品骨架和静态 UI。
 
@@ -6,7 +6,7 @@
 
 1. 打开微信开发者工具。
 2. 选择“导入项目”。
-3. 项目目录选择本文件夹：`youzhang-miniprogram`。
+3. 项目目录选择当前工作区下的 `PlayLog/` 文件夹。
 4. AppID 可以先使用测试号，正式开发前再替换 `project.config.json` 里的 `appid`。
 
 ## 当前页面
