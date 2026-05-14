@@ -35,6 +35,7 @@ Page({
     summary: "",
     detail: "",
     progress: "",
+    screenshots: [] as string[], // 本地临时路径
 
     // 状态
     saving: false,
@@ -112,6 +113,30 @@ Page({
     this.setData({ selectedGame: null, searchResults: [], searchQuery: "" });
   },
 
+  // ─── 截图 ──────────────────────────────────────────────
+
+  chooseImages() {
+    const remain = 9 - this.data.screenshots.length;
+    wx.chooseMedia({
+      count: remain,
+      mediaType: ["image"],
+      sourceType: ["album", "camera"],
+      success: (res) => {
+        const newPaths = res.tempFiles.map((f) => f.tempFilePath);
+        this.setData({
+          screenshots: [...this.data.screenshots, ...newPaths],
+        });
+      },
+    });
+  },
+
+  removeImage(e: WechatMiniprogram.TouchEvent) {
+    const index = e.currentTarget.dataset.index as number;
+    const list = [...this.data.screenshots];
+    list.splice(index, 1);
+    this.setData({ screenshots: list });
+  },
+
   // ─── 表单字段 ────────────────────────────────────────────
 
   selectMood(e: WechatMiniprogram.TouchEvent) {
@@ -149,6 +174,28 @@ Page({
 
     this.setData({ saving: true, saveError: "" });
 
+    // 上传截图到云存储，获取 fileID 列表
+    let imageFileIDs: string[] = [];
+    const { screenshots } = this.data;
+    if (screenshots.length > 0) {
+      wx.showLoading({ title: "上传截图…", mask: true });
+      try {
+        const uploadTasks = screenshots.map((path, i) => {
+          const ext = path.split(".").pop() ?? "jpg";
+          const cloudPath = `playLogs/${Date.now()}_${i}.${ext}`;
+          return wx.cloud.uploadFile({ cloudPath, filePath: path });
+        });
+        const results = await Promise.all(uploadTasks);
+        imageFileIDs = results.map((r) => r.fileID);
+      } catch (err) {
+        console.error("截图上传失败", err);
+        wx.hideLoading();
+        this.setData({ saving: false, saveError: "截图上传失败，请重试" });
+        return;
+      }
+      wx.hideLoading();
+    }
+
     const record = {
       gameId: selectedGame.id,
       gameTitle: selectedGame.title,
@@ -157,6 +204,7 @@ Page({
       summary: summary.trim(),
       detail: this.data.detail.trim(),
       progress: this.data.progress.trim(),
+      images: imageFileIDs,
       createdAt: new Date().toISOString(),
       // 云数据库会自动注入 _openid
     };

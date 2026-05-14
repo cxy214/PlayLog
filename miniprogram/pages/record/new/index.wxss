@@ -256,6 +256,65 @@
   font-weight: 700;
 }
 
+/* ─── 截图网格 ─── */
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8rpx;
+}
+
+/* 已选图片格子 */
+.screenshot-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.screenshot-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 删除按钮：右上角黑底 */
+.screenshot-del {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44rpx;
+  height: 44rpx;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  font-size: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 添加按钮格子 */
+.screenshot-add {
+  aspect-ratio: 1;
+  border: 1rpx dashed #CCCCCC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  background: #FAFAFA;
+}
+
+.screenshot-add-icon {
+  font-size: 44rpx;
+  color: #BBBBBB;
+  line-height: 1;
+}
+
+.screenshot-add-label {
+  font-size: 20rpx;
+  color: #BBBBBB;
+  letter-spacing: 1rpx;
+}
+
 /* ─── 提交区 ─── */
 .submit-area {
   position: fixed;

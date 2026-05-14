@@ -111,6 +111,36 @@
 
   <view class="form-divider"></view>
 
+  <!-- ─── 截图上传 ─── -->
+  <view class="form-section">
+    <view class="form-label">截图 <text class="form-label-opt">（最多 9 张）</text></view>
+    <view class="screenshot-grid">
+
+      <!-- 已选图片 -->
+      <view
+        class="screenshot-item"
+        wx:for="{{screenshots}}"
+        wx:key="*this"
+      >
+        <image class="screenshot-img" src="{{item}}" mode="aspectFill" />
+        <view class="screenshot-del" bindtap="removeImage" data-index="{{index}}">✕</view>
+      </view>
+
+      <!-- 添加按钮（未满 9 张时显示） -->
+      <view
+        class="screenshot-add"
+        wx:if="{{screenshots.length < 9}}"
+        bindtap="chooseImages"
+      >
+        <view class="screenshot-add-icon">＋</view>
+        <text class="screenshot-add-label">添加截图</text>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="form-divider"></view>
+
   <!-- ─── 当前进度 ─── -->
   <view class="form-section">
     <view class="form-label">当前进度 <text class="form-label-opt">（选填）</text></view>
