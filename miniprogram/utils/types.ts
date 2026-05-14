@@ -66,13 +66,19 @@ export type CloudPlayLog = {
   createdAt: string; // ISO 字符串
 };
 
-export type CollectionItem = {
-  id: string;
-  name: string;
-  series: string;
-  category: "盲盒" | "文具" | "周边";
-  status: "已拥有" | "心愿" | "重复";
-  accentColor: string;
+/** 游戏里程碑 / 成就收藏（milestones 集合） */
+export type MilestoneType = "通关" | "白金" | "Boss击败" | "剧情" | "收集" | "其他";
+
+export type CloudMilestone = {
+  _id: string;
+  gameId: string;
+  gameTitle: string;
+  gameAccentColor: string;
+  type: MilestoneType;
+  title: string;       // 里程碑标题，如「击败最终 Boss」
+  note: string;        // 备注
+  images: string[];    // 截图 fileID
+  createdAt: string;
 };
 
 export type StatCard = {

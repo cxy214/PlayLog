@@ -5,7 +5,8 @@
     "pages/collection/index",
     "pages/profile/index",
     "pages/record/new/index",
-    "pages/record/detail/index"
+    "pages/record/detail/index",
+    "pages/milestone/new/index"
   ],
   "window": {
     "navigationBarTitleText": "PlayLog",

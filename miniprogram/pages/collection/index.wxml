@@ -1,34 +1,140 @@
 <view class="page-shell collection-page">
+
+  <!-- ─── 页头 ─── -->
   <view class="collection-heading">
     <view>
-      <view class="page-title">小收藏</view>
-      <view class="page-subtitle">盲盒、文具、游戏周边都放在这里，像整理一格小展示柜。</view>
+      <view class="page-title">游戏邮册</view>
+      <view class="page-subtitle">每一个里程碑，都是值得珍藏的邮票。</view>
     </view>
-    <view class="box-doodle">
-      <view class="box-lid"></view>
-      <view class="box-body"></view>
+    <!-- 风格切换按钮 -->
+    <view class="style-switch" bindtap="switchStyle">
+      <text class="style-switch-label">{{styleLabel}}</text>
+      <text class="style-switch-icon">⇄</text>
     </view>
   </view>
 
-  <view class="category-row">
-    <view class="category-pill {{index === 0 ? 'active' : ''}}" wx:for="{{categories}}" wx:key="*this">{{item}}</view>
+  <!-- ─── 类型筛选 Tab ─── -->
+  <scroll-view scroll-x class="category-row" show-scrollbar="{{false}}">
+    <view
+      class="category-pill {{item === activeFilter ? 'active' : ''}}"
+      wx:for="{{filters}}"
+      wx:key="*this"
+      bindtap="onFilterTap"
+      data-filter="{{item}}"
+    >{{item}}</view>
+  </scroll-view>
+
+  <!-- ─── 加载中 ─── -->
+  <view class="state-empty" wx:if="{{loading}}">
+    <text class="state-empty-text">加载中…</text>
   </view>
 
-  <view class="cabinet">
-    <view class="collection-card card" wx:for="{{collectionItems}}" wx:key="id">
-      <view class="item-display" style="background: {{item.accentColor}};">
-        <view class="display-shine"></view>
-        <view class="display-sticker"></view>
-      </view>
-      <view class="item-body">
-        <view class="item-top">
-          <text class="item-name">{{item.name}}</text>
-          <text class="tag warm">{{item.status}}</text>
+  <!-- ─── 空状态 ─── -->
+  <view class="state-empty" wx:elif="{{milestones.length === 0}}">
+    <text class="state-empty-text">还没有里程碑，去贴第一张邮票吧</text>
+  </view>
+
+  <block wx:else>
+
+    <!-- ══════════════════════════════════════════
+         风格一：邮票网格
+    ══════════════════════════════════════════ -->
+    <view class="stamp-grid" wx:if="{{viewStyle === 'stamp'}}">
+      <view class="stamp-wrap" wx:for="{{milestones}}" wx:key="_id">
+        <view
+          class="stamp"
+          style="--accent: {{item.gameAccentColor}};"
+          bindtap="previewImage"
+          data-urls="{{item.images}}"
+          data-current="{{item.firstImage}}"
+        >
+          <!-- 图片区 -->
+          <view class="stamp-img-area">
+            <image
+              wx:if="{{item.hasImage}}"
+              class="stamp-img"
+              src="{{item.firstImage}}"
+              mode="aspectFill"
+            />
+            <!-- 无图时用游戏色块 + 类型文字 -->
+            <view wx:else class="stamp-no-img" style="background:{{item.gameAccentColor}};">
+              <text class="stamp-type-text">{{item.type}}</text>
+            </view>
+            <!-- 右上角类型印章 -->
+            <view class="stamp-badge">{{item.type}}</view>
+          </view>
+          <!-- 底部信息区 -->
+          <view class="stamp-info">
+            <text class="stamp-game">{{item.gameTitle}}</text>
+            <text class="stamp-title">{{item.title}}</text>
+            <text class="stamp-date">{{item.dateShort}}</text>
+          </view>
         </view>
-        <text class="item-series">{{item.series}} · {{item.category}}</text>
       </view>
     </view>
+
+    <!-- ══════════════════════════════════════════
+         风格二：拍立得（占位，后续实现）
+    ══════════════════════════════════════════ -->
+    <view class="polaroid-grid" wx:elif="{{viewStyle === 'polaroid'}}">
+      <view class="polaroid-wrap" wx:for="{{milestones}}" wx:key="_id">
+        <view class="polaroid" style="--accent: {{item.gameAccentColor}};">
+          <view class="polaroid-img-area">
+            <image
+              wx:if="{{item.hasImage}}"
+              class="polaroid-img"
+              src="{{item.firstImage}}"
+              mode="aspectFill"
+            />
+            <view wx:else class="polaroid-no-img" style="background:{{item.gameAccentColor}};">
+              <text class="polaroid-type-text">{{item.type}}</text>
+            </view>
+          </view>
+          <view class="polaroid-info">
+            <text class="polaroid-title">{{item.title}}</text>
+            <text class="polaroid-meta">{{item.gameTitle}} · {{item.dateShort}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ══════════════════════════════════════════
+         风格三：胶卷（占位，后续实现）
+    ══════════════════════════════════════════ -->
+    <view class="film-list" wx:elif="{{viewStyle === 'film'}}">
+      <view class="film-row" wx:for="{{milestones}}" wx:key="_id">
+        <view class="film-frame">
+          <view class="film-holes">
+            <view class="film-hole" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
+          </view>
+          <view class="film-img-area">
+            <image
+              wx:if="{{item.hasImage}}"
+              class="film-img"
+              src="{{item.firstImage}}"
+              mode="aspectFill"
+            />
+            <view wx:else class="film-no-img" style="background:{{item.gameAccentColor}};">
+              <text class="film-type-text">{{item.type}}</text>
+            </view>
+          </view>
+          <view class="film-holes">
+            <view class="film-hole" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
+          </view>
+        </view>
+        <view class="film-info">
+          <text class="film-title">{{item.title}}</text>
+          <text class="film-meta">{{item.gameTitle}} · {{item.dateShort}}</text>
+        </view>
+      </view>
+    </view>
+
+  </block>
+
+  <!-- ─── 浮动新建按钮 ─── -->
+  <view class="fab" bindtap="goNewMilestone">
+    <text class="fab-icon">＋</text>
+    <text class="fab-label">贴邮票</text>
   </view>
 
-  <button class="primary-button">收进收藏柜</button>
 </view>

@@ -1,4 +1,4 @@
-import type { CollectionItem, GameEntry, PlayLog, StatCard } from "./types";
+import type { GameEntry, PlayLog, StatCard } from "./types";
 
 export const todayLogs: PlayLog[] = [
   {
@@ -49,33 +49,6 @@ export const games: GameEntry[] = [
     progress: "真格开放",
     note: "想记录武器手感和地图偏好。",
     tags: ["对战", "装备", "组队"]
-  }
-];
-
-export const collectionItems: CollectionItem[] = [
-  {
-    id: "col-labubu",
-    name: "海盐汽水款",
-    series: "夏日系列",
-    category: "盲盒",
-    status: "已拥有",
-    accentColor: "#35B8E0"
-  },
-  {
-    id: "col-tape",
-    name: "像素花园胶带",
-    series: "手帐素材",
-    category: "文具",
-    status: "心愿",
-    accentColor: "#F7B731"
-  },
-  {
-    id: "col-amiibo",
-    name: "喷射战士 amiibo",
-    series: "游戏周边",
-    category: "周边",
-    status: "重复",
-    accentColor: "#FF6B3D"
   }
 ];
 

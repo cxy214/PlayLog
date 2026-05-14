@@ -1,0 +1,108 @@
+<view class="page-shell milestone-new-page">
+
+  <!-- ─── 选择游戏 ─── -->
+  <view class="form-section">
+    <view class="form-label">游戏</view>
+
+    <view class="game-selected" wx:if="{{selectedGame}}" bindtap="clearGame">
+      <view class="game-dot" style="background:{{selectedGame.accentColor}};"></view>
+      <view class="game-selected-info">
+        <text class="game-selected-title">{{selectedGame.title}}</text>
+        <text class="game-selected-meta">{{selectedGame.platformLabel}}</text>
+      </view>
+      <text class="game-clear">✕</text>
+    </view>
+
+    <scroll-view scroll-x class="shelf-chips" show-scrollbar="{{false}}" wx:else>
+      <view
+        class="shelf-chip"
+        wx:for="{{shelfGames}}"
+        wx:key="id"
+        bindtap="selectGame"
+        data-game="{{item}}"
+      >
+        <view class="shelf-chip-dot" style="background:{{item.accentColor}};"></view>
+        <text>{{item.title}}</text>
+      </view>
+      <view class="shelf-chip shelf-chip-empty" wx:if="{{shelfGames.length === 0}}">
+        <text>先去书架添加游戏</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 里程碑类型 ─── -->
+  <view class="form-section">
+    <view class="form-label">类型</view>
+    <view class="type-row">
+      <view
+        class="type-chip {{selectedType === item ? 'active' : ''}}"
+        wx:for="{{types}}"
+        wx:key="*this"
+        bindtap="selectType"
+        data-type="{{item}}"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 里程碑标题 ─── -->
+  <view class="form-section">
+    <view class="form-label">里程碑名称</view>
+    <input
+      class="form-input"
+      placeholder="如：击败最终 Boss、全收集达成…"
+      value="{{title}}"
+      bindinput="onTitleInput"
+      maxlength="40"
+    />
+    <text class="input-count">{{title.length}}/40</text>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 备注 ─── -->
+  <view class="form-section">
+    <view class="form-label">备注 <text class="form-label-opt">（选填）</text></view>
+    <textarea
+      class="form-textarea"
+      placeholder="记录一下当时的感受…"
+      value="{{note}}"
+      bindinput="onNoteInput"
+      maxlength="200"
+      auto-height
+      adjust-position
+    />
+    <text class="input-count">{{note.length}}/200</text>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 截图 ─── -->
+  <view class="form-section">
+    <view class="form-label">截图 <text class="form-label-opt">（最多 9 张）</text></view>
+    <view class="screenshot-grid">
+      <view class="screenshot-item" wx:for="{{screenshots}}" wx:key="*this">
+        <image class="screenshot-img" src="{{item}}" mode="aspectFill" />
+        <view class="screenshot-del" bindtap="removeImage" data-index="{{index}}">✕</view>
+      </view>
+      <view class="screenshot-add" wx:if="{{screenshots.length < 9}}" bindtap="chooseImages">
+        <view class="screenshot-add-icon">＋</view>
+        <text class="screenshot-add-label">添加截图</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ─── 提交 ─── -->
+  <view class="submit-area">
+    <button
+      class="primary-button submit-btn {{saving ? 'disabled' : ''}}"
+      bindtap="submit"
+      disabled="{{saving}}"
+    >{{saving ? '保存中…' : '贴上这张邮票'}}</button>
+    <text class="submit-hint" wx:if="{{saveError}}">{{saveError}}</text>
+  </view>
+
+</view>
