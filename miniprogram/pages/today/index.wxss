@@ -2,39 +2,26 @@
   padding-bottom: 80rpx;
 }
 
-/* ─── Hero：文艺拼贴风 ─── */
+/* ─── Hero：平面化，无卡片感 ─── */
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 20rpx;
-  min-height: 290rpx;
-  padding: 40rpx 32rpx 48rpx;
-  border-radius: 32rpx;
+  min-height: 260rpx;
+  padding: 40rpx 0 40rpx;
+  border-bottom: 1rpx solid #EBEBEB;
   background: #FFFFFF;
-  border: 1rpx solid #EBEBEB;
-  overflow: visible;
   position: relative;
-  box-shadow:
-    0 4rpx 16rpx rgba(0, 0, 0, 0.05),
-    0 16rpx 40rpx rgba(0, 0, 0, 0.04);
 }
 
-/* 纸纹横线（极淡，保留手帐感） */
+/* 去掉纸纹横线容器，改用极淡背景线 */
 .hero-lines {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 32rpx;
-  overflow: hidden;
-  pointer-events: none;
+  display: none;
 }
 
 .hero-line {
-  height: 48rpx;
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.04);
+  display: none;
 }
 
 .hero-copy {
@@ -43,87 +30,79 @@
   z-index: 1;
 }
 
-/* 日期：莫兰迪橙印章 */
+/* 日期：印章风格保留，但更克制 */
 .date-stamp {
   display: inline-flex;
   align-items: center;
-  height: 42rpx;
-  padding: 0 16rpx;
-  border: 1.5rpx solid #D4896A;
-  border-radius: 6rpx;
+  height: 38rpx;
+  padding: 0 14rpx;
+  border: 1rpx solid #D4896A;
+  border-radius: 4rpx;
   color: #D4896A;
-  font-size: 20rpx;
+  font-size: 19rpx;
   font-weight: 700;
   font-style: italic;
   letter-spacing: 3rpx;
   margin-bottom: 20rpx;
-  transform: rotate(-1.5deg);
+  transform: rotate(-1deg);
   position: relative;
 }
 
+/* 去掉内框线 */
 .date-stamp::before {
-  content: "";
-  position: absolute;
-  inset: 3rpx;
-  border: 1rpx solid rgba(212, 137, 106, 0.25);
-  border-radius: 4rpx;
+  display: none;
 }
 
 /* Hero 标题 */
 .hero-title {
-  font-size: 54rpx !important;
+  font-size: 52rpx !important;
   font-weight: 700 !important;
-  letter-spacing: 1rpx !important;
+  letter-spacing: 0rpx !important;
   line-height: 1.2 !important;
 }
 
-/* ─── Hero 插画区 ─── */
+/* ─── Hero 插画区（保留，是手帐特色） ─── */
 .hero-doodle {
-  width: 186rpx;
-  flex: 0 0 186rpx;
+  width: 160rpx;
+  flex: 0 0 160rpx;
   align-self: center;
-  height: 210rpx;
+  height: 190rpx;
   position: relative;
   z-index: 1;
 }
 
-/* 主手帐卡片 */
 .doodle-card {
   position: absolute;
   right: 0;
   top: 8rpx;
-  width: 148rpx;
-  height: 172rpx;
-  border: 2rpx solid #5BAF85;
-  border-radius: 20rpx;
-  background: rgba(255, 255, 255, 0.92);
-  transform: rotate(4deg);
-  box-shadow:
-    3rpx 6rpx 16rpx rgba(91, 175, 133, 0.12),
-    0 1rpx 0 rgba(255,255,255,0.9) inset;
+  width: 130rpx;
+  height: 155rpx;
+  border: 1.5rpx solid #5BAF85;
+  border-radius: 4rpx;           /* 直角化 */
+  background: #FFFFFF;
+  transform: rotate(3deg);
+  box-shadow: none;
 }
 
-/* 卡片内横线 */
 .doodle-line {
-  width: 72rpx;
-  height: 4rpx;
-  border-radius: 999rpx;
-  margin: 22rpx 0 0 22rpx;
-  background: #C8E8D8;
+  width: 68rpx;
+  height: 3rpx;
+  border-radius: 0;
+  margin: 20rpx 0 0 18rpx;
+  background: #D4E8DC;
 }
 
 .doodle-line.wide {
-  width: 100rpx;
-  margin-top: 38rpx;
+  width: 92rpx;
+  margin-top: 34rpx;
 }
 
-/* 星形闪光 */
 .doodle-spark {
   position: absolute;
-  right: 18rpx;
-  top: 16rpx;
-  width: 22rpx;
-  height: 22rpx;
+  right: 16rpx;
+  top: 14rpx;
+  width: 20rpx;
+  height: 20rpx;
 }
 
 .doodle-spark::before,
@@ -131,11 +110,11 @@
   content: "";
   position: absolute;
   background: #D4896A;
-  border-radius: 999rpx;
+  border-radius: 0;
 }
 
 .doodle-spark::before {
-  width: 22rpx;
+  width: 20rpx;
   height: 2rpx;
   top: 50%;
   left: 0;
@@ -144,68 +123,65 @@
 
 .doodle-spark::after {
   width: 2rpx;
-  height: 22rpx;
+  height: 20rpx;
   left: 50%;
   top: 0;
   transform: translateX(-50%);
 }
 
-/* 小花 */
 .doodle-flower {
   position: absolute;
-  left: 20rpx;
-  bottom: 22rpx;
-  width: 52rpx;
-  height: 52rpx;
+  left: 16rpx;
+  bottom: 20rpx;
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .doodle-flower view {
   position: absolute;
-  width: 20rpx;
-  height: 20rpx;
-  border: 2rpx solid #D4896A;
+  width: 18rpx;
+  height: 18rpx;
+  border: 1.5rpx solid #D4896A;
   border-radius: 50%;
 }
 
-.doodle-flower view:nth-child(1) { left: 16rpx; top: 0; }
-.doodle-flower view:nth-child(2) { right: 0; top: 16rpx; }
-.doodle-flower view:nth-child(3) { left: 16rpx; bottom: 0; }
-.doodle-flower view:nth-child(4) { left: 0; top: 16rpx; }
+.doodle-flower view:nth-child(1) { left: 15rpx; top: 0; }
+.doodle-flower view:nth-child(2) { right: 0; top: 15rpx; }
+.doodle-flower view:nth-child(3) { left: 15rpx; bottom: 0; }
+.doodle-flower view:nth-child(4) { left: 0; top: 15rpx; }
 
-/* 便签本 */
 .doodle-pad {
   position: absolute;
-  left: 4rpx;
+  left: 2rpx;
   bottom: 0;
-  width: 88rpx;
-  height: 70rpx;
-  border: 2rpx solid #C9A84C;
-  border-radius: 16rpx;
-  background: rgba(255, 248, 220, 0.85);
-  transform: rotate(-7deg);
-  box-shadow: 2rpx 5rpx 12rpx rgba(201, 168, 76, 0.15);
+  width: 80rpx;
+  height: 64rpx;
+  border: 1.5rpx solid #C9A84C;
+  border-radius: 4rpx;           /* 直角化 */
+  background: rgba(255, 248, 220, 0.8);
+  transform: rotate(-6deg);
+  box-shadow: none;
 }
 
 .doodle-pad::after {
   content: "";
   position: absolute;
-  left: 14rpx;
-  top: 20rpx;
-  width: 50rpx;
-  height: 3rpx;
-  border-radius: 999rpx;
-  background: rgba(201, 168, 76, 0.45);
-  box-shadow: 0 14rpx 0 rgba(201, 168, 76, 0.3);
+  left: 12rpx;
+  top: 18rpx;
+  width: 46rpx;
+  height: 2rpx;
+  border-radius: 0;
+  background: rgba(201, 168, 76, 0.4);
+  box-shadow: 0 13rpx 0 rgba(201, 168, 76, 0.25);
 }
 
-/* 回形针装饰 */
 .doodle-clip {
   position: absolute;
-  right: 56rpx;
-  top: -14rpx;
-  width: 18rpx;
-  height: 44rpx;
-  border: 2.5rpx solid #B0C4BC;
+  right: 50rpx;
+  top: -12rpx;
+  width: 16rpx;
+  height: 40rpx;
+  border: 2rpx solid #BBBBBB;
   border-radius: 999rpx;
   border-bottom: none;
 }
@@ -214,10 +190,10 @@
   content: "";
   position: absolute;
   left: 3rpx;
-  top: 6rpx;
-  width: 8rpx;
-  height: 28rpx;
-  border: 2.5rpx solid #B0C4BC;
+  top: 5rpx;
+  width: 6rpx;
+  height: 24rpx;
+  border: 2rpx solid #BBBBBB;
   border-radius: 999rpx;
   border-bottom: none;
 }
@@ -225,7 +201,7 @@
 /* ─── 快捷操作 ─── */
 .quick-panel {
   display: flex;
-  gap: 14rpx;
+  gap: 12rpx;
   margin-top: 28rpx;
 }
 
@@ -240,33 +216,32 @@
 }
 
 .quick-action {
-  min-width: 110rpx;
-  height: 92rpx;
+  min-width: 100rpx;
+  height: 88rpx;
   border: 1rpx solid #EBEBEB;
-  border-radius: 16rpx;
+  border-radius: 0;              /* 直角 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6rpx;
   background: #FFFFFF;
-  color: #7A9088;
-  font-size: 21rpx;
+  color: #888888;
+  font-size: 20rpx;
   font-weight: 600;
   letter-spacing: 1rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
-/* 快捷操作图标：相机 */
 .quick-icon {
-  width: 32rpx;
-  height: 26rpx;
+  width: 30rpx;
+  height: 24rpx;
   position: relative;
 }
 
 .icon-camera {
-  border: 2rpx solid #7A9088;
-  border-radius: 6rpx;
+  border: 1.5rpx solid #888888;
+  border-radius: 3rpx;
 }
 
 .icon-camera::before {
@@ -275,58 +250,67 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 12rpx;
-  height: 12rpx;
-  border: 2rpx solid #7A9088;
+  width: 11rpx;
+  height: 11rpx;
+  border: 1.5rpx solid #888888;
   border-radius: 50%;
 }
 
 .icon-camera::after {
   content: "";
   position: absolute;
-  left: 6rpx;
-  top: -6rpx;
-  width: 10rpx;
-  height: 6rpx;
-  border: 2rpx solid #7A9088;
+  left: 5rpx;
+  top: -5rpx;
+  width: 9rpx;
+  height: 5rpx;
+  border: 1.5rpx solid #888888;
   border-bottom: none;
-  border-radius: 4rpx 4rpx 0 0;
+  border-radius: 2rpx 2rpx 0 0;
 }
 
-/* 快捷操作图标：星星 */
 .icon-star {
-  width: 28rpx;
-  height: 28rpx;
-  border: 2rpx solid #C9A84C;
+  width: 26rpx;
+  height: 26rpx;
+  border: 1.5rpx solid #C9A84C;
   transform: rotate(45deg);
-  border-radius: 4rpx;
+  border-radius: 2rpx;
 }
 
 /* ─── 统计条 ─── */
 .stats-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14rpx;
+  gap: 0;                        /* 无间距，靠细线分隔 */
+  border: 1rpx solid #EBEBEB;
+  border-radius: 0;
 }
 
 .stat-card {
-  min-height: 158rpx;
-  padding: 0 18rpx 20rpx;
-  border: 1rpx solid #EBEBEB;
-  border-radius: 24rpx;
+  min-height: 148rpx;
+  padding: 20rpx 18rpx 20rpx;
+  border-right: 1rpx solid #EBEBEB;
+  border-radius: 0;
   background: #FFFFFF;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  box-shadow: none;
   position: relative;
   overflow: hidden;
 }
 
-/* 卡片顶部彩色胶带（莫兰迪色） */
+.stat-card:last-child {
+  border-right: none;
+}
+
+/* 顶部彩色细线（替代胶带，更克制） */
 .stat-tape {
-  height: 8rpx;
-  margin: 0 20rpx 18rpx;
-  border-radius: 0 0 6rpx 6rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rpx;
+  margin: 0;
+  border-radius: 0;
   background: #5BAF85;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .stat-card:nth-child(2) .stat-tape { background: #D4896A; }
@@ -334,9 +318,10 @@
 
 .stat-value {
   display: block;
-  font-size: 34rpx;
+  margin-top: 8rpx;
+  font-size: 36rpx;
   font-weight: 700;
-  color: #1A2E22;
+  color: #1A1A1A;
   letter-spacing: -1rpx;
 }
 
@@ -345,15 +330,15 @@
   margin-top: 6rpx;
   font-size: 20rpx;
   font-weight: 600;
-  color: #7A9088;
+  color: #888888;
   letter-spacing: 1rpx;
 }
 
 .stat-hint {
   display: block;
   margin-top: 6rpx;
-  color: #B0C4BC;
-  font-size: 19rpx;
+  color: #BBBBBB;
+  font-size: 18rpx;
   line-height: 1.5;
 }
 
@@ -365,82 +350,80 @@
 
 .game-card {
   display: inline-block;
-  width: 276rpx;
+  width: 260rpx;
   margin-right: 16rpx;
   overflow: hidden;
   vertical-align: top;
   border: 1rpx solid #EBEBEB;
-  border-radius: 28rpx;
+  border-radius: 0;              /* 直角 */
   background: #FFFFFF;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 }
 
 .cover {
-  height: 164rpx;
-  padding: 22rpx;
+  height: 156rpx;
+  padding: 20rpx;
   color: #FFFFFF;
   position: relative;
   overflow: hidden;
 }
 
-/* 胶片叠色：在封面色块上叠一层暖色渐变，模拟老照片感 */
+/* 胶片叠色保留 */
 .cover::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 240, 210, 0.18) 0%,
-    rgba(180, 120, 80, 0.12) 100%
+    rgba(255, 240, 210, 0.15) 0%,
+    rgba(180, 120, 80, 0.1) 100%
   );
   mix-blend-mode: multiply;
   z-index: 1;
 }
 
-/* 封面右下角大圆 */
 .cover::after {
   content: "";
   position: absolute;
-  right: -36rpx;
-  bottom: -36rpx;
-  width: 120rpx;
-  height: 120rpx;
+  right: -30rpx;
+  bottom: -30rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   z-index: 2;
 }
 
 .cover-noise {
   position: absolute;
-  left: 22rpx;
-  bottom: 18rpx;
-  width: 56rpx;
-  height: 3rpx;
-  border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.45);
+  left: 20rpx;
+  bottom: 16rpx;
+  width: 48rpx;
+  height: 2rpx;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.4);
   z-index: 3;
 }
 
 .cover-title {
   display: block;
-  max-width: 196rpx;
+  max-width: 180rpx;
   white-space: normal;
-  font-size: 26rpx;
+  font-size: 25rpx;
   font-weight: 700;
-  letter-spacing: 1rpx;
+  letter-spacing: 0.5rpx;
   line-height: 1.3;
   position: relative;
   z-index: 3;
-  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.3);
 }
 
-/* 封面线条小人 */
 .cover-figure {
   position: absolute;
-  right: 18rpx;
-  bottom: 22rpx;
-  width: 24rpx;
-  height: 36rpx;
+  right: 16rpx;
+  bottom: 20rpx;
+  width: 22rpx;
+  height: 34rpx;
   z-index: 3;
 }
 
@@ -450,9 +433,9 @@
   left: 50%;
   top: 0;
   transform: translateX(-50%);
-  width: 12rpx;
-  height: 12rpx;
-  border: 2rpx solid rgba(255,255,255,0.65);
+  width: 11rpx;
+  height: 11rpx;
+  border: 1.5rpx solid rgba(255,255,255,0.6);
   border-radius: 50%;
 }
 
@@ -460,75 +443,72 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: 14rpx;
+  top: 13rpx;
   transform: translateX(-50%);
   width: 2rpx;
-  height: 14rpx;
-  background: rgba(255,255,255,0.65);
+  height: 13rpx;
+  background: rgba(255,255,255,0.6);
   border-radius: 999rpx;
   box-shadow:
-    -7rpx 6rpx 0 rgba(255,255,255,0.65),
-     7rpx 6rpx 0 rgba(255,255,255,0.65),
-    -6rpx 4rpx 0 rgba(255,255,255,0.65),
-     6rpx 4rpx 0 rgba(255,255,255,0.65);
+    -6rpx 5rpx 0 rgba(255,255,255,0.6),
+     6rpx 5rpx 0 rgba(255,255,255,0.6),
+    -5rpx 3rpx 0 rgba(255,255,255,0.6),
+     5rpx 3rpx 0 rgba(255,255,255,0.6);
 }
 
 .game-meta {
-  padding: 18rpx 18rpx 20rpx;
+  padding: 16rpx 16rpx 18rpx;
+  border-top: 1rpx solid #EBEBEB;
 }
 
 .game-title {
   display: block;
-  font-size: 26rpx;
+  font-size: 25rpx;
   font-weight: 700;
   white-space: normal;
-  color: #1A2E22;
+  color: #1A1A1A;
   letter-spacing: 0.5rpx;
 }
 
 .game-progress {
   display: block;
-  margin-top: 8rpx;
-  color: #9AADA6;
-  font-size: 22rpx;
-  letter-spacing: 0.5rpx;
+  margin-top: 7rpx;
+  color: #888888;
+  font-size: 21rpx;
 }
 
 .tag-line {
   display: flex;
   flex-wrap: wrap;
   gap: 8rpx;
-  margin-top: 14rpx;
+  margin-top: 12rpx;
 }
 
 /* ─── 今日碎片 ─── */
 .log-card {
-  padding: 0 26rpx 26rpx;
-  margin-bottom: 20rpx;
-  border-radius: 28rpx;
+  padding: 24rpx 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  border-bottom: 1rpx solid #EBEBEB;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* 卡片顶部胶带（莫兰迪绿，更低调） */
+/* 顶部胶带改为左侧彩色竖条 */
 .log-tape {
-  height: 10rpx;
-  width: 72rpx;
-  margin: 0 auto 22rpx;
-  border-radius: 0 0 8rpx 8rpx;
-  background: rgba(91, 175, 133, 0.4);
-  position: relative;
+  position: absolute;
+  left: -32rpx;                  /* 贴着页面左边距 */
+  top: 28rpx;
+  height: 40rpx;
+  width: 4rpx;
+  margin: 0;
+  border-radius: 0;
+  background: #5BAF85;
+  opacity: 0.8;
 }
 
 .log-tape::after {
-  content: "";
-  position: absolute;
-  left: 10rpx;
-  right: 10rpx;
-  top: 2rpx;
-  height: 2rpx;
-  border-radius: 999rpx;
-  background: rgba(255,255,255,0.5);
+  display: none;
 }
 
 .log-top {
@@ -540,49 +520,39 @@
 
 .log-game {
   display: block;
-  font-size: 29rpx;
+  font-size: 28rpx;
   font-weight: 700;
-  color: #1A2E22;
+  color: #1A1A1A;
   letter-spacing: 0.5rpx;
 }
 
 .log-date {
   display: block;
-  margin-top: 6rpx;
-  color: #B0C4BC;
-  font-size: 21rpx;
+  margin-top: 5rpx;
+  color: #BBBBBB;
+  font-size: 20rpx;
   letter-spacing: 1rpx;
 }
 
 .log-summary {
   display: block;
-  margin-top: 20rpx;
-  color: #1A2E22;
-  font-size: 27rpx;
-  line-height: 1.75;           /* 更大行高，更透气 */
+  margin-top: 16rpx;
+  color: #1A1A1A;
+  font-size: 26rpx;
+  line-height: 1.75;
   letter-spacing: 0.5rpx;
 }
 
 .log-detail {
   display: block;
-  margin-top: 10rpx;
-  color: #9AADA6;
-  font-size: 24rpx;
+  margin-top: 8rpx;
+  color: #888888;
+  font-size: 23rpx;
   line-height: 1.65;
   letter-spacing: 0.5rpx;
 }
 
-/* 底部虚线分割 */
+/* 底部分隔线已由 border-bottom 承担，隐藏原虚线 */
 .log-divider {
-  margin-top: 22rpx;
-  height: 2rpx;
-  background: repeating-linear-gradient(
-    90deg,
-    #E0E0E0 0,
-    #E0E0E0 6rpx,
-    transparent 6rpx,
-    transparent 14rpx
-  );
-  border-radius: 999rpx;
-  opacity: 0.7;
+  display: none;
 }

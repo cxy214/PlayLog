@@ -5,27 +5,29 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 18rpx;
+  padding-bottom: 32rpx;
+  border-bottom: 1rpx solid #EBEBEB;
 }
 
-/* ─── 盲盒插画（莫兰迪色调） ─── */
+/* ─── 盲盒插画（直角化） ─── */
 .box-doodle {
-  width: 126rpx;
-  height: 122rpx;
-  flex: 0 0 126rpx;
+  width: 116rpx;
+  height: 112rpx;
+  flex: 0 0 116rpx;
   position: relative;
 }
 
 .box-lid {
   position: absolute;
-  left: 18rpx;
-  top: 14rpx;
-  width: 88rpx;
-  height: 30rpx;
-  border: 2rpx solid #C9A84C;
-  border-radius: 10rpx;
-  background: rgba(255, 248, 220, 0.85);
-  transform: rotate(-5deg);
-  box-shadow: 2rpx 3rpx 8rpx rgba(201, 168, 76, 0.15);
+  left: 14rpx;
+  top: 12rpx;
+  width: 84rpx;
+  height: 28rpx;
+  border: 1.5rpx solid #C9A84C;
+  border-radius: 2rpx;           /* 直角 */
+  background: rgba(255, 248, 220, 0.8);
+  transform: rotate(-4deg);
+  box-shadow: none;
 }
 
 .box-lid::before {
@@ -34,22 +36,22 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 18rpx;
-  height: 18rpx;
-  border: 1.5rpx solid #A07830;
+  width: 16rpx;
+  height: 16rpx;
+  border: 1rpx solid #A07830;
   border-radius: 50%;
 }
 
 .box-body {
   position: absolute;
-  left: 12rpx;
-  bottom: 8rpx;
-  width: 100rpx;
-  height: 72rpx;
-  border: 2rpx solid #5BAF85;
-  border-radius: 14rpx;
-  background: rgba(240, 250, 245, 0.88);
-  box-shadow: 2rpx 4rpx 12rpx rgba(91, 175, 133, 0.1);
+  left: 8rpx;
+  bottom: 6rpx;
+  width: 96rpx;
+  height: 68rpx;
+  border: 1.5rpx solid #5BAF85;
+  border-radius: 2rpx;           /* 直角 */
+  background: rgba(240, 250, 245, 0.85);
+  box-shadow: none;
 }
 
 .box-body::before {
@@ -58,88 +60,95 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #5BAF85;
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
 .box-body::after {
   content: "";
   position: absolute;
-  right: 12rpx;
-  top: 10rpx;
-  width: 14rpx;
-  height: 14rpx;
-  border: 1.5rpx solid #D4896A;
+  right: 10rpx;
+  top: 8rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border: 1rpx solid #D4896A;
   border-radius: 50%;
 }
 
-/* ─── 分类 Pill（莫兰迪印章） ─── */
+/* ─── 分类 Tab（喜茶风：底部下划线激活） ─── */
 .category-row {
   display: flex;
-  gap: 12rpx;
-  margin-top: 32rpx;
+  gap: 0;
+  margin-top: 0;
   overflow-x: auto;
+  border-bottom: 1rpx solid #EBEBEB;
 }
 
 .category-pill {
   flex: 0 0 auto;
-  min-width: 108rpx;
-  height: 58rpx;
-  border-radius: 8rpx;
-  border: 1.5rpx solid #DEDEDE;
-  background: #FFFFFF;
-  color: #9AADA6;
+  min-width: 100rpx;
+  height: 72rpx;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  color: #888888;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 23rpx;
+  font-size: 24rpx;
   font-weight: 600;
   font-style: italic;
-  letter-spacing: 2rpx;
+  letter-spacing: 1rpx;
   position: relative;
+  padding: 0 16rpx;
 }
 
+/* 去掉内框线 */
 .category-pill::before {
+  display: none;
+}
+
+/* 激活：底部黑色下划线 */
+.category-pill.active {
+  border: none;
+  background: transparent;
+  color: #1A1A1A;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.category-pill.active::after {
   content: "";
   position: absolute;
-  inset: 3rpx;
-  border: 1rpx solid rgba(0, 0, 0, 0.05);
-  border-radius: 6rpx;
-}
-
-.category-pill.active {
-  border-color: #1A2E22;
-  background: #1A2E22;
-  color: #FFFFFF;
-  font-weight: 700;
-  box-shadow: 0 3rpx 0 #0D1A12;
-}
-
-.category-pill.active::before {
-  border-color: rgba(255,255,255,0.12);
+  bottom: 0;
+  left: 16rpx;
+  right: 16rpx;
+  height: 2rpx;
+  background: #1A1A1A;
 }
 
 /* ─── 收藏柜网格 ─── */
 .cabinet {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16rpx;
-  margin-top: 28rpx;
+  gap: 1rpx;                     /* 极细间距，形成网格线效果 */
+  margin-top: 0;
   margin-bottom: 32rpx;
+  background: #EBEBEB;           /* 间距背景色=分隔线色 */
 }
 
 .collection-card {
   overflow: hidden;
-  border-radius: 24rpx;
-  border: 1rpx solid #EBEBEB;
+  border-radius: 0;              /* 直角 */
+  border: none;
   background: #FFFFFF;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 }
 
 /* ─── 展示区 ─── */
 .item-display {
-  height: 186rpx;
+  height: 180rpx;
   position: relative;
   overflow: hidden;
 }
@@ -151,42 +160,41 @@
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 240, 210, 0.15) 0%,
-    rgba(0, 0, 0, 0.08) 100%
+    rgba(255, 240, 210, 0.12) 0%,
+    rgba(0, 0, 0, 0.06) 100%
   );
   z-index: 1;
 }
 
-/* 展示区底部渐变 */
 .item-display::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 60rpx;
-  background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
+  height: 50rpx;
+  background: linear-gradient(to top, rgba(0,0,0,0.07), transparent);
   z-index: 2;
 }
 
 .display-shine {
   position: absolute;
-  left: 18rpx;
-  top: 18rpx;
-  width: 36rpx;
-  height: 68rpx;
+  left: 14rpx;
+  top: 14rpx;
+  width: 32rpx;
+  height: 60rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
   z-index: 3;
 }
 
 .display-sticker {
   position: absolute;
-  right: 16rpx;
-  top: 16rpx;
-  width: 34rpx;
-  height: 34rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.45);
+  right: 14rpx;
+  top: 14rpx;
+  width: 30rpx;
+  height: 30rpx;
+  border: 1.5rpx solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   z-index: 3;
 }
@@ -197,39 +205,40 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 8rpx;
-  height: 8rpx;
+  width: 7rpx;
+  height: 7rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* ─── 卡片信息区 ─── */
 .item-body {
-  min-height: 128rpx;
-  padding: 16rpx 16rpx 18rpx;
+  min-height: 120rpx;
+  padding: 14rpx 14rpx 16rpx;
+  border-top: 1rpx solid #EBEBEB;
 }
 
 .item-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10rpx;
+  gap: 8rpx;
 }
 
 .item-name {
   flex: 1;
-  font-size: 26rpx;
+  font-size: 25rpx;
   font-weight: 700;
   line-height: 1.35;
-  color: #1A2E22;
+  color: #1A1A1A;
   letter-spacing: 0.5rpx;
 }
 
 .item-series {
   display: block;
-  margin-top: 10rpx;
-  color: #B0C4BC;
-  font-size: 21rpx;
+  margin-top: 8rpx;
+  color: #BBBBBB;
+  font-size: 20rpx;
   line-height: 1.4;
   letter-spacing: 0.5rpx;
 }
