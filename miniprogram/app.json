@@ -3,18 +3,19 @@
     "pages/today/index",
     "pages/library/index",
     "pages/collection/index",
-    "pages/profile/index"
+    "pages/profile/index",
+    "pages/record/new/index"
   ],
   "window": {
     "navigationBarTitleText": "PlayLog",
-    "navigationBarBackgroundColor": "#F7FAF4",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F7FAF4",
+    "backgroundColor": "#FFFFFF",
     "backgroundTextStyle": "dark"
   },
   "tabBar": {
-    "color": "#839084",
-    "selectedColor": "#6D9F7A",
+    "color": "#AAAAAA",
+    "selectedColor": "#1A1A1A",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [

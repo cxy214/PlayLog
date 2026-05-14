@@ -34,7 +34,7 @@
 
   <!-- ─── 快捷操作 ─── -->
   <view class="quick-panel">
-    <button class="primary-button record-button">＋ 新建游玩记录</button>
+    <button class="primary-button record-button" bindtap="goNewRecord">＋ 新建游玩记录</button>
     <view class="quick-actions">
       <view class="quick-action">
         <view class="quick-icon icon-camera"></view>

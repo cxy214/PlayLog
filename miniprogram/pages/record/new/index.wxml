@@ -1,0 +1,136 @@
+<view class="page-shell record-page">
+
+  <!-- ─── 选择游戏 ─── -->
+  <view class="form-section">
+    <view class="form-label">游戏</view>
+
+    <!-- 已选游戏 -->
+    <view class="game-selected" wx:if="{{selectedGame}}" bindtap="clearGame">
+      <view class="game-selected-cover" style="background:{{selectedGame.accentColor}};"></view>
+      <view class="game-selected-info">
+        <text class="game-selected-title">{{selectedGame.title}}</text>
+        <text class="game-selected-meta">{{selectedGame.platformLabel}} · {{selectedGame.progress}}</text>
+      </view>
+      <text class="game-selected-clear">✕</text>
+    </view>
+
+    <!-- 搜索框 -->
+    <view class="search-row" wx:else>
+      <input
+        class="form-input"
+        placeholder="搜索游戏名称…"
+        value="{{searchQuery}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+        bindconfirm="doSearch"
+      />
+      <view class="search-btn" bindtap="doSearch">搜索</view>
+    </view>
+
+    <!-- 搜索结果 -->
+    <view class="search-results" wx:if="{{searchResults.length > 0 && !selectedGame}}">
+      <view
+        class="search-result-item"
+        wx:for="{{searchResults}}"
+        wx:key="externalId"
+        bindtap="selectSearchResult"
+        data-item="{{item}}"
+      >
+        <view class="result-cover-sm" style="background:#EBEBEB;"></view>
+        <view class="result-info">
+          <text class="result-title-sm">{{item.title}}</text>
+          <text class="result-meta-sm">{{item.platformLabel}}</text>
+        </view>
+        <text class="result-pick">选用</text>
+      </view>
+    </view>
+
+    <!-- 从书架选 -->
+    <view class="shelf-pick-row" wx:if="{{!selectedGame}}">
+      <text class="shelf-pick-label">或从书架选择</text>
+      <scroll-view scroll-x class="shelf-chips" show-scrollbar="{{false}}">
+        <view
+          class="shelf-chip"
+          wx:for="{{shelfGames}}"
+          wx:key="id"
+          bindtap="selectShelfGame"
+          data-item="{{item}}"
+        >
+          <view class="shelf-chip-dot" style="background:{{item.accentColor}};"></view>
+          <text>{{item.title}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 心情标签 ─── -->
+  <view class="form-section">
+    <view class="form-label">今天的感受</view>
+    <view class="mood-row">
+      <view
+        class="mood-chip {{selectedMood === item ? 'active' : ''}}"
+        wx:for="{{moods}}"
+        wx:key="*this"
+        bindtap="selectMood"
+        data-mood="{{item}}"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 一句话记录 ─── -->
+  <view class="form-section">
+    <view class="form-label">一句话记录</view>
+    <input
+      class="form-input"
+      placeholder="今天玩了什么，发生了什么…"
+      value="{{summary}}"
+      bindinput="onSummaryInput"
+      maxlength="60"
+    />
+    <text class="input-count">{{summary.length}}/60</text>
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 详细备注 ─── -->
+  <view class="form-section">
+    <view class="form-label">详细备注 <text class="form-label-opt">（选填）</text></view>
+    <textarea
+      class="form-textarea"
+      placeholder="更多想法、截图说明、下次目标…"
+      value="{{detail}}"
+      bindinput="onDetailInput"
+      maxlength="300"
+      auto-height
+    />
+  </view>
+
+  <view class="form-divider"></view>
+
+  <!-- ─── 当前进度 ─── -->
+  <view class="form-section">
+    <view class="form-label">当前进度 <text class="form-label-opt">（选填）</text></view>
+    <input
+      class="form-input"
+      placeholder="如：第 2 章 / 通关 / 练习中…"
+      value="{{progress}}"
+      bindinput="onProgressInput"
+      maxlength="30"
+    />
+  </view>
+
+  <!-- ─── 提交按钮 ─── -->
+  <view class="submit-area">
+    <button
+      class="primary-button submit-btn {{saving ? 'disabled' : ''}}"
+      bindtap="submit"
+      disabled="{{saving}}"
+    >{{saving ? '保存中…' : '保存记录'}}</button>
+    <text class="submit-hint" wx:if="{{saveError}}">{{saveError}}</text>
+  </view>
+
+</view>
