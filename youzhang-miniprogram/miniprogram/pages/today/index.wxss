@@ -1,0 +1,292 @@
+.today-page {
+  padding-bottom: 70rpx;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 24rpx;
+  min-height: 304rpx;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  background: linear-gradient(135deg, #e7fbf6 0%, #f7fbff 48%, #fff1e8 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -90rpx;
+  top: -90rpx;
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 50%;
+  border: 36rpx solid rgba(15, 118, 110, 0.1);
+}
+
+.hero-copy {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.date {
+  color: #e2552c;
+  font-size: 24rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.hero-device {
+  width: 190rpx;
+  flex: 0 0 190rpx;
+  align-self: center;
+  border-radius: 34rpx;
+  padding: 18rpx;
+  background: #172026;
+  box-shadow: 0 24rpx 46rpx rgba(23, 32, 38, 0.22);
+  position: relative;
+  z-index: 1;
+}
+
+.device-screen {
+  height: 112rpx;
+  border-radius: 22rpx;
+  padding: 22rpx 18rpx;
+  background: linear-gradient(145deg, #27c3ad, #8be5d0);
+}
+
+.screen-line {
+  width: 64rpx;
+  height: 12rpx;
+  border-radius: 999rpx;
+  margin-top: 14rpx;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.screen-line.wide {
+  width: 104rpx;
+  margin-top: 0;
+}
+
+.device-controls {
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18rpx;
+}
+
+.control-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.42;
+}
+
+.control-dot.active {
+  opacity: 1;
+  background: #ff7a45;
+}
+
+.record-button {
+  flex: 1;
+}
+
+.quick-panel {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 12rpx;
+  flex: 0 0 auto;
+}
+
+.quick-action {
+  min-width: 112rpx;
+  height: 88rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #172026;
+  font-size: 24rpx;
+  font-weight: 760;
+  box-shadow: 0 14rpx 32rpx rgba(19, 34, 43, 0.07);
+}
+
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.stat-card {
+  min-height: 148rpx;
+  padding: 18rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 16rpx 38rpx rgba(19, 34, 43, 0.06);
+}
+
+.stat-value {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 800;
+  color: #0f766e;
+}
+
+.stat-label,
+.stat-hint {
+  display: block;
+}
+
+.stat-label {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.stat-hint {
+  margin-top: 6rpx;
+  color: #7d8790;
+  font-size: 20rpx;
+  line-height: 1.35;
+}
+
+.game-row {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.game-card {
+  display: inline-block;
+  width: 292rpx;
+  min-height: 392rpx;
+  margin-right: 18rpx;
+  overflow: hidden;
+  vertical-align: top;
+  border-radius: 28rpx;
+  background: #ffffff;
+  box-shadow: 0 18rpx 44rpx rgba(19, 34, 43, 0.09);
+}
+
+.cover {
+  height: 174rpx;
+  padding: 22rpx;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::after {
+  content: "";
+  position: absolute;
+  right: -42rpx;
+  bottom: -58rpx;
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cover-noise {
+  position: absolute;
+  left: 24rpx;
+  bottom: 20rpx;
+  width: 74rpx;
+  height: 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.cover-title {
+  display: block;
+  max-width: 210rpx;
+  white-space: normal;
+  font-size: 30rpx;
+  font-weight: 850;
+  line-height: 1.25;
+  position: relative;
+  z-index: 1;
+}
+
+.game-meta {
+  padding: 20rpx;
+}
+
+.game-title,
+.game-progress {
+  display: block;
+}
+
+.game-title {
+  font-size: 28rpx;
+  font-weight: 800;
+  white-space: normal;
+}
+
+.game-progress {
+  margin-top: 8rpx;
+  color: #69747c;
+  font-size: 23rpx;
+}
+
+.tag-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 16rpx;
+}
+
+.log-card {
+  padding: 24rpx;
+  margin-bottom: 18rpx;
+  border-radius: 28rpx;
+}
+
+.log-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.log-game,
+.log-date,
+.log-summary,
+.log-detail {
+  display: block;
+}
+
+.log-game {
+  font-size: 30rpx;
+  font-weight: 820;
+}
+
+.log-date {
+  margin-top: 6rpx;
+  color: #69747c;
+  font-size: 23rpx;
+}
+
+.log-summary {
+  margin-top: 20rpx;
+  color: #172026;
+  font-size: 28rpx;
+  line-height: 1.55;
+}
+
+.log-detail {
+  margin-top: 10rpx;
+  color: #7d8790;
+  font-size: 24rpx;
+  line-height: 1.5;
+}

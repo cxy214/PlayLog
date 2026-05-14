@@ -1,0 +1,75 @@
+<view class="page-shell today-page">
+  <view class="hero">
+    <view class="hero-copy">
+      <view class="date">{{dateLabel}}</view>
+      <view class="page-title">今日游帐</view>
+      <view class="page-subtitle">今天的游戏进度、截图和收藏灵感，都可以在这里留下。</view>
+    </view>
+    <view class="hero-device">
+      <view class="device-screen">
+        <view class="screen-line wide"></view>
+        <view class="screen-line"></view>
+      </view>
+      <view class="device-controls">
+        <view class="control-dot"></view>
+        <view class="control-dot active"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-panel">
+    <button class="primary-button record-button">新建游玩记录</button>
+    <view class="quick-actions">
+      <view class="quick-action">传截图</view>
+      <view class="quick-action">记收藏</view>
+    </view>
+  </view>
+
+  <view class="section stats-strip">
+    <view class="stat-card" wx:for="{{stats}}" wx:key="label">
+      <text class="stat-value">{{item.value}}</text>
+      <text class="stat-label">{{item.label}}</text>
+      <text class="stat-hint">{{item.hint}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">最近在玩</text>
+      <text class="section-action">查看全部</text>
+    </view>
+    <scroll-view scroll-x class="game-row" enhanced show-scrollbar="{{false}}">
+      <view class="game-card" wx:for="{{games}}" wx:key="id">
+        <view class="cover" style="background: {{item.accentColor}};">
+          <view class="cover-noise"></view>
+          <text class="cover-title">{{item.title}}</text>
+        </view>
+        <view class="game-meta">
+          <text class="game-title">{{item.title}}</text>
+          <text class="game-progress">{{item.progress}}</text>
+          <view class="tag-line">
+            <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">今日碎片</text>
+      <text class="section-action">生成分享图</text>
+    </view>
+    <view class="log-card card" wx:for="{{todayLogs}}" wx:key="id">
+      <view class="log-top">
+        <view>
+          <text class="log-game">{{item.gameTitle}}</text>
+          <text class="log-date">{{item.dateLabel}}</text>
+        </view>
+        <text class="tag warm">{{item.mood}}</text>
+      </view>
+      <text class="log-summary">{{item.summary}}</text>
+      <text class="log-detail">{{item.detail}}</text>
+    </view>
+  </view>
+</view>

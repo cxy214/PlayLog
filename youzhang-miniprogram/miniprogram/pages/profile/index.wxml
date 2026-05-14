@@ -1,0 +1,39 @@
+<view class="page-shell profile-page">
+  <view class="profile-card card">
+    <view class="avatar">游</view>
+    <view class="profile-copy">
+      <view class="page-title">我的游帐</view>
+      <view class="page-subtitle">一册正在长出来的游戏生活记录本。</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">主题</text>
+      <text class="section-action">换一套</text>
+    </view>
+    <view class="theme-row">
+      <view class="theme-chip card" wx:for="{{themes}}" wx:key="*this">
+        <view class="theme-swatch theme-{{index}}"></view>
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">工具</text>
+    </view>
+    <view class="action-list card">
+      <view class="action-item" wx:for="{{actions}}" wx:key="*this">
+        <text>{{item}}</text>
+        <text class="action-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section note-card card">
+    <text class="note-title">下一步</text>
+    <text class="note-text">接入微信云开发后，这里会显示同步状态、图片容量和账号备份入口。</text>
+  </view>
+</view>

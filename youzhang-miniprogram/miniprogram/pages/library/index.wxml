@@ -1,0 +1,29 @@
+<view class="page-shell library-page">
+  <view class="page-title">游戏库</view>
+  <view class="page-subtitle">给每一款游戏一个状态，也给自己留一条轻松的进度线。</view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{item === activeFilter ? 'active' : ''}}" wx:for="{{filters}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="shelf">
+    <view class="shelf-card card" wx:for="{{games}}" wx:key="id">
+      <view class="cover-tile" style="background: {{item.accentColor}};">
+        <text>{{item.title}}</text>
+      </view>
+      <view class="shelf-main">
+        <view class="shelf-top">
+          <text class="shelf-title">{{item.title}}</text>
+          <text class="platform">{{item.platform}}</text>
+        </view>
+        <text class="shelf-progress">{{item.progress}}</text>
+        <text class="shelf-note">{{item.note}}</text>
+        <view class="tag-line">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="primary-button add-button">添加游戏</button>
+</view>

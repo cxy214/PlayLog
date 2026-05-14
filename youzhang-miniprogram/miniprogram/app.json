@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/today/index",
+    "pages/library/index",
+    "pages/collection/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "游帐",
+    "navigationBarBackgroundColor": "#F6F8FB",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F6F8FB",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#7D8790",
+    "selectedColor": "#0F766E",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/today/index",
+        "text": "今日"
+      },
+      {
+        "pagePath": "pages/library/index",
+        "text": "游戏库"
+      },
+      {
+        "pagePath": "pages/collection/index",
+        "text": "收藏柜"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
